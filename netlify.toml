@@ -1,0 +1,31 @@
+# Configuração de publicação na Netlify
+# A Netlify já comprime (gzip/brotli) HTML, CSS e JS automaticamente.
+
+[build]
+  publish = "."
+
+# Imagens e ícones: guardados no navegador por 30 dias
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+# CSS e JS: 1 dia (os nomes dos arquivos não mudam a cada versão,
+# então um cache curto garante que mudanças cheguem rápido)
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# Cabeçalhos de segurança básicos para todas as páginas
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"

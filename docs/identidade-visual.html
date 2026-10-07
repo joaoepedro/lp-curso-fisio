@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Identidade visual — Saúde da Mulher na Prática</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --nevoa:#F3F1F5;      /* fundo */
+    --berinjela:#2A1530;  /* texto */
+    --vinho:#7A2848;      /* marca */
+    --oliva:#4A6334;      /* CTA */
+    --argila:#EBCFC8;     /* superfícies */
+    --ocre:#C2913A;       /* destaques pontuais */
+    --branco:#FFFFFF;
+    --serif:"Young Serif", Georgia, serif;
+    --sans:"Figtree", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--nevoa);color:var(--berinjela);font:400 1.0625rem/1.6 var(--sans);padding:48px 16px 96px}
+  .wrap{max-width:1040px;margin:0 auto}
+  h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.15}
+  .doc-title{font-size:2rem;margin-bottom:.25rem}
+  .doc-sub{color:#5d4a62;margin-bottom:48px;max-width:62ch}
+  section.block{margin-bottom:64px}
+  section.block > h2{font-size:1.5rem;margin-bottom:8px}
+  section.block > p{color:#5d4a62;max-width:62ch;margin-bottom:24px}
+
+  /* Paleta */
+  .swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .sw{border-radius:14px;overflow:hidden;background:var(--branco);border:1px solid #e3dde6}
+  .sw .chip{height:96px}
+  .sw .info{padding:10px 12px;font-size:.875rem}
+  .sw strong{display:block;font-weight:600}
+  .sw span{color:#6b5a70}
+
+  /* Tipografia */
+  .type{background:var(--branco);border-radius:20px;padding:32px;display:grid;gap:20px}
+  .t-h1{font-family:var(--serif);font-size:clamp(2rem,4.5vw,3.25rem);line-height:1.1;max-width:20ch}
+  .t-h2{font-family:var(--serif);font-size:2rem}
+  .t-h3{font-family:var(--sans);font-weight:700;font-size:1.25rem}
+  .t-body{max-width:62ch}
+  .t-small{font-size:.875rem;color:#6b5a70}
+  .meta{font-size:.8125rem;color:#8a7a8e}
+
+  /* Motivo: a bacia */
+  .motif{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:720px){.motif{grid-template-columns:1fr}}
+  .motif .card{background:var(--branco);border-radius:20px;padding:24px}
+  .basin-demo{height:180px;background:var(--argila);border-radius:24px 24px 50% 50% / 24px 24px 100% 100%;margin-bottom:12px}
+  .divider-demo{height:120px;position:relative;background:var(--branco);overflow:hidden;border-radius:14px;margin-bottom:12px}
+  .divider-demo::after{content:"";position:absolute;left:-10%;right:-10%;top:0;height:70px;background:var(--vinho);border-radius:0 0 50% 50% / 0 0 100% 100%}
+
+  /* Hero mock */
+  .hero{background:var(--nevoa);border:1px solid #e0d8e3;border-radius:24px;overflow:hidden}
+  .notice{background:var(--berinjela);color:#e9dfec;font-size:.8125rem;text-align:center;padding:8px 16px}
+  .hero-in{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;padding:48px 40px 56px;align-items:center}
+  @media (max-width:820px){.hero-in{grid-template-columns:1fr;padding:32px 20px 40px;gap:28px}}
+  .brand{font-family:var(--serif);font-size:1.0625rem;color:var(--vinho);margin-bottom:28px}
+  .hero h1{font-size:clamp(1.9rem,4vw,2.9rem);margin-bottom:18px;max-width:18ch}
+  .hero .lead{max-width:52ch;margin-bottom:28px;color:#4a3850}
+  .countdown{display:flex;gap:10px;margin-bottom:24px}
+  .countdown div{background:var(--branco);border-radius:12px;padding:10px 12px;min-width:64px;text-align:center}
+  .countdown b{display:block;font-family:var(--serif);font-size:1.5rem;font-weight:400;color:var(--vinho)}
+  .countdown small{font-size:.75rem;color:#6b5a70}
+  .btn{display:inline-block;font:600 1rem/1 var(--sans);padding:18px 28px;border-radius:999px;border:0;cursor:pointer;text-decoration:none}
+  .btn-cta{background:var(--oliva);color:#fff}
+  .btn-cta:hover{background:#3d532a}
+  .btn-cta:focus-visible{outline:3px solid var(--ocre);outline-offset:3px}
+  .btn-ghost{background:transparent;color:var(--vinho);box-shadow:inset 0 0 0 2px var(--vinho)}
+  .micro{font-size:.875rem;color:#6b5a70;margin-top:12px}
+  .photo{aspect-ratio:4/5;background:linear-gradient(160deg,#d9b3ab,#b47c84 55%,#7A2848);border-radius:28px 28px 50% 50% / 28px 28px 42% 42%;display:flex;align-items:center;justify-content:center;padding:24px;color:#fff;font-size:.875rem;position:relative}
+  .photo::before{content:"";position:absolute;inset:auto -14px -14px -14px;height:55%;border:2px solid var(--ocre);border-top:0;border-radius:0 0 50% 50% / 0 0 100% 100%;opacity:.8}
+
+  /* Componentes */
+  .comps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+  .panel{background:var(--branco);border-radius:20px;padding:24px}
+  .panel h3{font-family:var(--serif);font-weight:400;font-size:1.25rem;margin-bottom:12px}
+  .quote{border-left:3px solid var(--ocre);padding-left:16px}
+  .quote p{font-family:var(--serif);font-size:1.0625rem;line-height:1.5;margin-bottom:10px}
+  .quote cite{font-style:normal;font-size:.875rem;color:#6b5a70}
+  .acc{border-top:1px solid #e3dde6}
+  .acc div{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #e3dde6;font-weight:600}
+  .acc div span{color:var(--vinho);font-family:var(--serif);font-weight:400}
+  .acc p{padding:0 0 14px;color:#4a3850;font-size:.9375rem;border-bottom:1px solid #e3dde6}
+  .field{display:grid;gap:6px;margin-bottom:12px}
+  .field label{font-size:.875rem;font-weight:600}
+  .field input{font:inherit;padding:12px 14px;border-radius:12px;border:1.5px solid #cfc4d3;background:#fff}
+  .field input:focus{outline:none;border-color:var(--vinho);box-shadow:0 0 0 3px #7a28482a}
+  .field.err input{border-color:#B3261E}
+  .field.err small{color:#B3261E}
+  .price{background:var(--vinho);color:#fff;border-radius:24px 24px 40% 40% / 24px 24px 18% 18%;padding:28px 24px 44px;text-align:center}
+  .price s{opacity:.7}
+  .price .big{font-family:var(--serif);font-size:2.6rem;display:block;margin:4px 0}
+  .price .btn-cta{background:#fff;color:var(--oliva);margin-top:16px}
+
+  .notes{background:var(--branco);border-radius:20px;padding:28px}
+  .notes ul{padding-left:20px;display:grid;gap:8px;max-width:70ch}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 class="doc-title">Identidade visual</h1>
+  <p class="doc-sub">Saúde da Mulher na Prática · proposta para aprovação. A ideia central: <em>pelve</em> vem do latim para "bacia". A curva da bacia, que acolhe e sustenta, é o elemento gráfico que se repete na página.</p>
+
+  <section class="block">
+    <h2>Paleta</h2>
+    <p>Fugimos do rosa e do lilás que quase todo site "feminino" usa. A base é uma névoa fria com texto em berinjela, o vinho é a cor da marca e o verde-oliva fica reservado para os botões de ação, então o olho aprende rápido onde clicar.</p>
+    <div class="swatches">
+      <div class="sw"><div class="chip" style="background:#F3F1F5;border-bottom:1px solid #e3dde6"></div><div class="info"><strong>Névoa</strong><span>#F3F1F5 · fundo</span></div></div>
+      <div class="sw"><div class="chip" style="background:#2A1530"></div><div class="info"><strong>Berinjela</strong><span>#2A1530 · texto</span></div></div>
+      <div class="sw"><div class="chip" style="background:#7A2848"></div><div class="info"><strong>Vinho</strong><span>#7A2848 · marca</span></div></div>
+      <div class="sw"><div class="chip" style="background:#4A6334"></div><div class="info"><strong>Oliva</strong><span>#4A6334 · botões de ação</span></div></div>
+      <div class="sw"><div class="chip" style="background:#EBCFC8"></div><div class="info"><strong>Argila</strong><span>#EBCFC8 · superfícies</span></div></div>
+      <div class="sw"><div class="chip" style="background:#C2913A"></div><div class="info"><strong>Ocre</strong><span>#C2913A · detalhes e foco</span></div></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Tipografia</h2>
+    <p>Young Serif nos títulos: uma serifa arredondada, acolhedora sem perder a seriedade. Figtree no texto: uma sans clara e muito legível no celular. As duas são do Google Fonts.</p>
+    <div class="type">
+      <div class="meta">H1 · Young Serif · 52px</div>
+      <div class="t-h1">Atenda gestantes, puérperas e mulheres com disfunções pélvicas com segurança</div>
+      <div class="meta">H2 · Young Serif · 32px</div>
+      <div class="t-h2">Talvez você se reconheça aqui</div>
+      <div class="meta">H3 · Figtree Bold · 20px</div>
+      <div class="t-h3">Fisioterapia na gestação</div>
+      <div class="meta">Texto · Figtree · 17px / 1.6</div>
+      <p class="t-body">A paciente chega ao consultório com 32 semanas de gestação e dor lombopélvica. Outra, seis meses depois do parto, conta baixinho que perde urina quando corre atrás do filho.</p>
+      <p class="t-small">Texto pequeno · Acesso imediato, certificado e garantia de 7 dias</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>O elemento da bacia</h2>
+    <p>É o único gesto ousado da página, usado em poucos lugares: na moldura da foto da instrutora, na transição entre seções e no card de preço. O resto fica sóbrio.</p>
+    <div class="motif">
+      <div class="card"><div class="basin-demo"></div><div class="t-small">Forma "bacia": topo reto, base em curva. Usada no card de preço e no fundo de seções de destaque.</div></div>
+      <div class="card"><div class="divider-demo"></div><div class="t-small">Transição entre seções: a seção de cima termina em curva, como uma bacia que acolhe a seguinte.</div></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Hero (pré-lançamento)</h2>
+    <p>Prévia de como a primeira dobra fica no desktop. No celular a foto vai para baixo do texto.</p>
+    <div class="hero">
+      <div class="notice">Projeto conceitual desenvolvido para portfólio. Instrutora, curso e depoimentos são fictícios.</div>
+      <div class="hero-in">
+        <div>
+          <div class="brand">Saúde da Mulher na Prática</div>
+          <h1>Atenda gestantes, puérperas e mulheres com disfunções pélvicas com segurança</h1>
+          <p class="lead">Curso online para fisioterapeutas e estudantes: 7 módulos, cerca de 30 horas de aula e encontros ao vivo mensais com a fisioterapeuta Camila Rocha.</p>
+          <div class="countdown" aria-label="Carrinho abre em">
+            <div><b>27</b><small>dias</small></div><div><b>14</b><small>horas</small></div><div><b>08</b><small>min</small></div><div><b>42</b><small>seg</small></div>
+          </div>
+          <a class="btn btn-cta" href="#">Entrar na lista de espera</a>
+          <p class="micro">Gratuito. Quem está na lista paga R$ 497 nas primeiras 48h.</p>
+        </div>
+        <div class="photo">foto da instrutora</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Componentes</h2>
+    <p>Amostras dos principais blocos com a identidade aplicada.</p>
+    <div class="comps">
+      <div class="panel">
+        <h3>Conteúdo programático</h3>
+        <div class="acc">
+          <div>1. Fundamentos <span>−</span></div>
+          <p>Anatomia e fisiologia do assoalho pélvico e as mudanças do corpo na gestação.</p>
+          <div>2. Avaliação fisioterapêutica <span>+</span></div>
+          <div>3. Disfunções do assoalho pélvico <span>+</span></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Depoimento</h3>
+        <div class="quote">
+          <p>"O que mais mudou foi o raciocínio. Antes eu seguia protocolo; agora eu entendo o que estou avaliando."</p>
+          <cite>Patrícia Lopes, fisioterapeuta em Belo Horizonte (MG)</cite>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Lista de espera</h3>
+        <div class="field"><label for="n">Nome</label><input id="n" value="Ana Clara"></div>
+        <div class="field err"><label for="e">E-mail</label><input id="e" value="ana@"><small>Informe um e-mail válido.</small></div>
+        <a class="btn btn-cta" href="#">Quero entrar na lista</a>
+      </div>
+      <div class="price">
+        <div>Valor total <s>R$ 1.891</s></div>
+        <span class="big">R$ 597</span>
+        <div>ou em até 12x no cartão</div>
+        <a class="btn btn-cta" href="#">Quero garantir minha vaga</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Princípios</h2>
+    <div class="notes">
+      <ul>
+        <li>Verde-oliva só em botões de ação. Nenhum outro elemento usa essa cor.</li>
+        <li>A curva da bacia aparece em no máximo três lugares, para continuar especial.</li>
+        <li>Fotos reais e respeitosas: consultório, gestantes em exercício, fisioterapeuta orientando. Nada de imagens sensuais ou de banco genérico.</li>
+        <li>Texto alinhado à esquerda, linhas de até ~65 caracteres. Centralizado só no card de preço.</li>
+        <li>Um único momento de animação: a entrada do hero. O resto da página não "pula" ao rolar.</li>
+        <li>Todos os pares de cor de texto e fundo passam no contraste AA.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+</body>
+</html>

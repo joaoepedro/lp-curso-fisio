@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Você está na lista! | Saúde da Mulher na Prática</title>
+  <meta name="description" content="Inscrição confirmada na lista de espera do curso Saúde da Mulher na Prática.">
+  <!-- Página de obrigado não deve aparecer no Google -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#7A2848">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fontes carregadas sem bloquear a página: o texto aparece na hora
+       (com a fonte do sistema) e troca quando as fontes chegam -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Young+Serif&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Young+Serif&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Young+Serif&display=swap"></noscript>
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="js/config.js" defer></script>
+  <script src="js/utils.js" defer></script>
+  <script src="js/tracking.js" defer></script>
+  <script src="js/obrigado.js" defer></script>
+</head>
+
+<body class="pagina-obrigado">
+  <aside class="aviso-conceitual" aria-label="Aviso">
+    Projeto conceitual desenvolvido para portfólio. Instrutora, curso e depoimentos são fictícios.
+  </aside>
+
+  <main class="obrigado">
+    <div class="container container--texto">
+      <p class="marca">Saúde da Mulher na Prática</p>
+
+      <!-- O nome é preenchido pelo JS (lido do sessionStorage, nunca da URL) -->
+      <h1 class="obrigado__titulo">Você está na lista<span data-nome-lead></span>!</h1>
+
+      <p class="obrigado__texto">
+        Você vai receber o link de compra no seu e-mail e no WhatsApp quando o carrinho abrir, em
+        <strong data-data="carrinhoAbre">03/11, às 20h</strong>.
+        Lembre que quem está na lista paga <strong data-preco="precoLista">R$ 497</strong> nas primeiras 48h.
+      </p>
+
+      <a class="btn btn--cta" href="#" data-grupo-whatsapp target="_blank" rel="noopener">Entrar no grupo de avisos no WhatsApp</a>
+      <p class="microcopy">Enquanto isso, adicione nosso e-mail aos seus contatos para não perder o aviso.</p>
+
+      <!-- Só aparece no modo portfólio, se houver link da aba "Demonstração" no config.js -->
+      <aside class="obrigado__demo" data-demo-planilha aria-label="Planilha de demonstração" hidden>
+        <h2>Veja sua inscrição chegando na planilha</h2>
+        <p>Esta landing page envia os dados do formulário para o Google Sheets. Abra a planilha de demonstração: sua inscrição aparece em alguns segundos, com os dados pessoais mascarados.</p>
+        <a class="btn btn--secundario" href="#" data-link-planilha target="_blank" rel="noopener">Abrir planilha de demonstração</a>
+      </aside>
+
+      <p><a class="link-voltar" href="index.html">Voltar para a página do curso</a></p>
+    </div>
+  </main>
+</body>
+</html>

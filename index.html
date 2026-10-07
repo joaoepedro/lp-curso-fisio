@@ -1,0 +1,715 @@
+<!doctype html>
+<!--
+  Fase da página (controlada por js/main.js a partir do config.js):
+    data-fase="pre"       → pré-lançamento (lista de espera)
+    data-fase="aberto"    → carrinho aberto (vendas)
+    data-fase="encerrado" → vendas encerradas
+  Elementos com data-mostrar="pre|aberto|encerrado" aparecem só na(s) fase(s) indicada(s).
+  O valor inicial "pre" garante uma página coerente mesmo antes do JS carregar.
+-->
+<html lang="pt-BR" data-fase="pre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ========== SEO ========== -->
+  <title>Curso de Fisioterapia em Saúde da Mulher e Obstetrícia</title>
+  <meta name="description" content="Curso online de fisioterapia em Saúde da Mulher: assoalho pélvico, gestação e pós-parto. Raciocínio clínico e prática. Certificado e aulas ao vivo.">
+  <link rel="canonical" href="https://lp-curso-fisio.netlify.app/">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#7A2848">
+
+  <!-- ========== Open Graph (WhatsApp, Instagram, Facebook) ========== -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Saúde da Mulher na Prática">
+  <meta property="og:title" content="Saúde da Mulher na Prática | Curso para fisioterapeutas">
+  <meta property="og:description" content="Avalie e trate gestantes, puérperas e mulheres com disfunções pélvicas com segurança. Lista de espera aberta.">
+  <meta property="og:url" content="https://lp-curso-fisio.netlify.app/">
+  <meta property="og:image" content="https://lp-curso-fisio.netlify.app/assets/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Fisioterapeuta Camila Rocha, instrutora do curso Saúde da Mulher na Prática">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- ========== Ícones ========== -->
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+
+  <!-- ========== Fontes (Google Fonts) ========== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fontes carregadas sem bloquear a página: o texto aparece na hora
+       (com a fonte do sistema) e troca quando as fontes chegam -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Young+Serif&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Young+Serif&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Young+Serif&display=swap"></noscript>
+
+  <!-- Pré-carrega a imagem do hero (maior elemento da primeira dobra) -->
+  <link rel="preload" as="image" type="image/webp" href="assets/img/camila-rocha-800.webp"
+        imagesrcset="assets/img/camila-rocha-400.webp 400w, assets/img/camila-rocha-600.webp 600w, assets/img/camila-rocha-800.webp 800w"
+        imagesizes="(min-width: 900px) 400px, 320px">
+
+  <!-- ========== Estilos ========== -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- ========== Dados estruturados (schema.org) ==========
+       Descreve o curso para buscadores e assistentes de IA. Não aparece na página.
+       Sem preço aqui de propósito: o preço vive só no config.js. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "Saúde da Mulher na Prática",
+    "description": "Curso online de fisioterapia pélvica e obstétrica para fisioterapeutas e estudantes: avaliação do assoalho pélvico, gestação, preparação para o parto e pós-parto.",
+    "inLanguage": "pt-BR",
+    "educationalLevel": "Profissional",
+    "audience": {
+      "@type": "EducationalAudience",
+      "educationalRole": "Fisioterapeutas e estudantes de fisioterapia"
+    },
+    "provider": {
+      "@type": "Person",
+      "name": "Camila Rocha",
+      "jobTitle": "Fisioterapeuta especialista em Saúde da Mulher"
+    },
+    "hasCourseInstance": {
+      "@type": "CourseInstance",
+      "courseMode": "online",
+      "courseWorkload": "PT30H"
+    }
+  }
+  </script>
+
+  <!-- ========== Scripts (defer: não bloqueiam a renderização) ========== -->
+  <!-- config.js SEMPRE primeiro: os demais leem window.CONFIG -->
+  <script src="js/config.js" defer></script>
+  <script src="js/utils.js" defer></script>
+  <script src="js/tracking.js" defer></script>
+  <script src="js/fase.js" defer></script>
+  <script src="js/countdown.js" defer></script>
+  <script src="js/checkout.js" defer></script>
+  <script src="js/form.js" defer></script>
+  <script src="js/trajeto.js" defer></script>
+  <script src="js/revelar.js" defer></script>
+  <script src="js/acordeao.js" defer></script>
+  <script src="js/depoimentos.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+
+<body>
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
+
+  <!-- Aviso de projeto conceitual -->
+  <aside class="aviso-conceitual" aria-label="Aviso">
+    Projeto conceitual desenvolvido para portfólio. Instrutora, curso e depoimentos são fictícios.
+  </aside>
+
+  <!-- Seletor de fase (só no modo portfólio; no celular fica aqui no topo,
+       no desktop flutua no canto inferior esquerdo), ativado por mostrarSeletorFase no config.js) -->
+  <aside class="seletor-fase" data-seletor-fase aria-label="Modo portfólio" hidden>
+    <p class="seletor-fase__titulo" id="seletor-fase-titulo">Ver a página na fase:</p>
+    <div class="seletor-fase__opcoes" role="group" aria-labelledby="seletor-fase-titulo">
+      <button type="button" data-fase-opcao="pre">Pré-lançamento</button>
+      <button type="button" data-fase-opcao="aberto">Vendas</button>
+      <button type="button" data-fase-opcao="encerrado">Encerrado</button>
+    </div>
+  </aside>
+
+  <!-- ========== CABEÇALHO ========== -->
+  <!-- Menu mínimo de propósito: em página de tráfego pago, cada link extra é uma saída. -->
+  <header class="cabecalho">
+    <div class="container cabecalho__inner">
+      <a class="marca" href="#inicio" aria-label="Saúde da Mulher na Prática, voltar ao início">
+        Saúde da Mulher na Prática
+      </a>
+      <a class="btn btn--cta btn--pequeno" href="#lista-espera" data-cta="lista" data-mostrar="pre encerrado">Entrar na lista</a>
+      <a class="btn btn--cta btn--pequeno" href="#oferta" data-mostrar="aberto">Garantir vaga</a>
+    </div>
+  </header>
+
+  <main id="conteudo-principal">
+
+    <!-- ========== 1. HERO ========== -->
+    <section class="hero" id="inicio" aria-labelledby="hero-titulo">
+      <div class="container hero__grid">
+        <div class="hero__texto">
+          <!-- Selos: o segundo muda conforme a fase (data vem do config.js) -->
+          <div class="hero__selos">
+            <p class="hero__selo">Curso online para fisioterapeutas e estudantes</p>
+            <p class="hero__selo hero__selo--data" data-mostrar="pre">
+              <span aria-hidden="true">✨</span> Lançamento em <span data-data="carrinhoAbre" data-formato="dia">03/11</span>
+            </p>
+            <p class="hero__selo hero__selo--data" data-mostrar="aberto">
+              <span aria-hidden="true">✨</span> Inscrições abertas até <span data-data="carrinhoFecha" data-formato="dia">10/11</span>
+            </p>
+            <p class="hero__selo hero__selo--data" data-mostrar="encerrado">Inscrições encerradas</p>
+          </div>
+
+          <h1 id="hero-titulo" class="hero__titulo">
+            Atenda gestantes, puérperas e mulheres com disfunções pélvicas com a segurança de quem sabe exatamente o que está avaliando
+          </h1>
+
+          <p class="hero__subtitulo">
+            Um curso que une raciocínio clínico e prática: 7 módulos, cerca de 30 horas de aula e encontros ao vivo mensais com a fisioterapeuta Camila Rocha, especialista em Saúde da Mulher.
+          </p>
+
+          <!-- Contador: o alvo e o rótulo mudam conforme a fase (js/countdown.js) -->
+          <div class="contador" data-contador data-mostrar="pre aberto" aria-live="off">
+            <p class="contador__rotulo" data-contador-rotulo>O carrinho abre em</p>
+            <div class="contador__numeros" role="timer">
+              <div class="contador__item"><span data-contador-dias>--</span><small>dias</small></div>
+              <div class="contador__item"><span data-contador-horas>--</span><small>horas</small></div>
+              <div class="contador__item"><span data-contador-minutos>--</span><small>min</small></div>
+              <div class="contador__item"><span data-contador-segundos>--</span><small>seg</small></div>
+            </div>
+          </div>
+
+          <!-- CTA por fase -->
+          <div class="hero__cta" data-mostrar="pre">
+            <a class="btn btn--cta" href="#lista-espera" data-cta="lista">Entrar na lista de espera</a>
+            <p class="microcopy">
+              Gratuito. Quem está na lista paga <span data-preco="precoLista">R$ 497</span> nas primeiras 48h.
+            </p>
+          </div>
+          <div class="hero__cta" data-mostrar="aberto">
+            <a class="btn btn--cta" href="#oferta">Quero garantir minha vaga</a>
+            <p class="microcopy">Acesso imediato. Certificado. Garantia de 7 dias.</p>
+          </div>
+          <div class="hero__cta" data-mostrar="encerrado">
+            <a class="btn btn--cta" href="#lista-espera" data-cta="lista">Entrar na lista da próxima turma</a>
+            <p class="microcopy">As inscrições desta turma foram encerradas.</p>
+          </div>
+        </div>
+
+        <figure class="hero__foto">
+          <!-- srcset: o navegador escolhe a versão certa para a tela (400px ou 800px de largura) -->
+          <img src="assets/img/camila-rocha-800.webp"
+               srcset="assets/img/camila-rocha-400.webp 400w, assets/img/camila-rocha-600.webp 600w, assets/img/camila-rocha-800.webp 800w"
+               sizes="(min-width: 900px) 400px, 320px"
+               alt="Fisioterapeuta Camila Rocha de jaleco branco, sorrindo, em seu consultório"
+               width="800" height="1000" fetchpriority="high">
+        </figure>
+      </div>
+    </section>
+
+    <!-- ========== 2. PROBLEMA ==========
+         Três partes: as "cenas" (três pacientes), a pergunta em destaque
+         e, no desktop, título + lista de dores lado a lado. -->
+    <section class="secao secao--problema" id="problema" aria-labelledby="problema-titulo">
+      <div class="container">
+
+        <!-- TRAJETO: a mesma mulher ao longo do tempo (gestação → pós-parto → anos depois).
+             Faixas em "escada": a primeira sai da borda esquerda da tela e as outras descem um
+             degrau à direita. Onde se sobrepõem, as cores se misturam numa terceira cor.
+             Animação (js/trajeto.js): cada faixa desliza da esquerda quando entra na tela.
+             Estrutura: o <li>/.degrau só posiciona (e é observado pelo JS);
+             a .faixa dentro dele tem a cor e é ela que se move. -->
+        <div class="trajeto" data-trajeto>
+          <ol class="trajeto__paradas">
+            <li class="degrau degrau--1" data-trajeto-item>
+              <div class="faixa faixa--1">
+                <p class="faixa__etapa">Gestação</p>
+                <p class="faixa__numero">32 semanas</p>
+                <p>de gestação, ela chega ao consultório com dor lombopélvica.</p>
+              </div>
+            </li>
+            <li class="degrau degrau--2" data-trajeto-item>
+              <div class="faixa faixa--2">
+                <p class="faixa__etapa">Pós-parto</p>
+                <p class="faixa__numero">6 meses</p>
+                <p>depois do parto, ela conta baixinho que perde urina quando corre atrás do filho.</p>
+              </div>
+            </li>
+            <li class="degrau degrau--3" data-trajeto-item>
+              <div class="faixa faixa--3">
+                <p class="faixa__etapa">Anos depois</p>
+                <p class="faixa__numero">3 profissionais</p>
+                <p>depois, ela ainda sente dor na relação.</p>
+              </div>
+            </li>
+          </ol>
+
+          <!-- Destino: a última faixa, com a pergunta que a leitora faz a si mesma -->
+          <div class="degrau degrau--4" data-trajeto-item>
+            <div class="faixa faixa--4">
+              <p class="faixa__contexto">Você sabe que pode ajudar essas mulheres. Mas, na hora da avaliação, fica a dúvida:</p>
+              <p class="faixa__pergunta">Estou olhando para o que importa? Essa conduta faz sentido para <em>esta</em> paciente?</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="dores">
+          <div class="dores__intro">
+            <h2 id="problema-titulo" class="secao__titulo">Talvez você se reconheça aqui</h2>
+            <p class="secao__intro">A Saúde da Mulher é uma das áreas mais bonitas da fisioterapia, e uma das que mais assustam quem está começando. Não por falta de interesse, mas porque a formação raramente prepara para a realidade do consultório.</p>
+          </div>
+
+          <ul class="lista-dores">
+            <li>Você estudou o assoalho pélvico em poucas aulas na graduação e não se sente segura para avaliar uma paciente de verdade.</li>
+            <li>Quando chega uma gestante com dor, você fica na dúvida sobre o que pode e o que não pode fazer em cada trimestre.</li>
+            <li>No pós-parto, você acaba passando os mesmos exercícios para todas, porque não sabe bem como individualizar.</li>
+            <li>Você tem receio de conduzir uma avaliação tão íntima e não saber deixar a paciente confortável.</li>
+            <li>Você já assistiu a vídeos e leu artigos soltos, mas ainda não conseguiu juntar as peças num raciocínio clínico.</li>
+            <li>Você vê a demanda crescendo, mas sente que ainda não está pronta para se apresentar como fisioterapeuta da área.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 3. O CURSO (solução + método) ========== -->
+    <section class="secao secao--curso" id="curso" aria-labelledby="curso-titulo">
+      <div class="container">
+        <div class="container--texto">
+          <h2 id="curso-titulo" class="secao__titulo">Conheça o Saúde da Mulher na Prática</h2>
+          <p class="secao__intro">O <strong>Saúde da Mulher na Prática</strong> foi criado para transformar essa dúvida em raciocínio clínico. Você vai entender o porquê de cada etapa e sair sabendo montar um plano de tratamento que você consegue explicar e defender. Sem protocolo decorado. Sem fórmula mágica. Com método.</p>
+          <p>As aulas teóricas são acompanhadas de demonstrações em modelo anatômico, simulações de atendimento e discussão de casos reais, para você enxergar o raciocínio em ação, e não só a técnica.</p>
+        </div>
+
+        <!-- O método é uma sequência real, por isso a lista ordenada -->
+        <h3 class="metodo__titulo">O Método Entender-Avaliar-Tratar</h3>
+        <ol class="metodo">
+          <li class="metodo__passo">
+            <h4>Entender</h4>
+            <p>O que está acontecendo com o corpo dessa mulher: anatomia, fisiologia e as mudanças da gestação e do pós-parto.</p>
+          </li>
+          <li class="metodo__passo">
+            <h4>Avaliar</h4>
+            <p>O que observar, o que perguntar e como conduzir uma avaliação íntima com ética e acolhimento.</p>
+          </li>
+          <li class="metodo__passo">
+            <h4>Tratar</h4>
+            <p>Montar o plano para cada paciente, escolher as condutas e saber quando encaminhar.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ========== 4. BENEFÍCIOS ========== -->
+    <section class="secao secao--beneficios" id="beneficios" aria-labelledby="beneficios-titulo">
+      <div class="container container--texto">
+        <h2 id="beneficios-titulo" class="secao__titulo">O que muda na sua prática</h2>
+        <ul class="lista-beneficios">
+          <li><strong>Você vai conduzir uma avaliação do assoalho pélvico com segurança</strong>, sabendo o que observar, o que perguntar e como deixar a paciente à vontade.</li>
+          <li><strong>Você vai saber o que fazer com a gestante que chega com dor</strong>, com condutas adequadas a cada trimestre e sem medo de errar.</li>
+          <li><strong>Você vai individualizar o tratamento no pós-parto</strong> em vez de repetir a mesma lista de exercícios para todas.</li>
+          <li><strong>Você vai conseguir explicar cada conduta para a paciente</strong>, o que gera confiança e adesão ao tratamento.</li>
+          <li><strong>Você vai saber quando encaminhar</strong>, trabalhando em parceria com médicos e outros profissionais.</li>
+          <li><strong>Você vai começar a atender com as fichas de avaliação prontas</strong>, sem precisar montar tudo do zero.</li>
+          <li><strong>Você não vai estudar sozinha:</strong> os encontros ao vivo e a comunidade estão lá para as dúvidas que surgem no consultório.</li>
+          <li><strong>Você vai poder rever as aulas sempre que precisar</strong> durante 1 ano, inclusive na véspera daquele atendimento difícil.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== 5. CONTEÚDO PROGRAMÁTICO ========== -->
+    <!-- <details>/<summary>: acordeão nativo, acessível e funciona sem JS.
+         O atributo name="…" igual em todos faz o navegador manter só um aberto por vez. -->
+    <section class="secao secao--conteudo" id="conteudo" aria-labelledby="conteudo-titulo">
+      <div class="container container--texto">
+        <h2 id="conteudo-titulo" class="secao__titulo">Conteúdo programático</h2>
+        <p class="secao__intro">7 módulos, cerca de 30 horas de aula, organizados no mesmo caminho que você percorre no consultório.</p>
+
+        <div class="acordeao" data-acordeao>
+          <details class="acordeao__item" name="modulos" open>
+            <summary>Módulo 1 · Fundamentos</summary>
+            <p>Anatomia e fisiologia do assoalho pélvico e as mudanças do corpo na gestação.</p>
+          </details>
+          <details class="acordeao__item" name="modulos">
+            <summary>Módulo 2 · Avaliação fisioterapêutica na saúde da mulher</summary>
+            <p>Anamnese, exame físico, ética e consentimento.</p>
+          </details>
+          <details class="acordeao__item" name="modulos">
+            <summary>Módulo 3 · Disfunções do assoalho pélvico</summary>
+            <p>Incontinência urinária, prolapsos e dor pélvica.</p>
+          </details>
+          <details class="acordeao__item" name="modulos">
+            <summary>Módulo 4 · Fisioterapia na gestação</summary>
+            <p>Dor lombopélvica, exercícios e adaptações por trimestre.</p>
+          </details>
+          <details class="acordeao__item" name="modulos">
+            <summary>Módulo 5 · Preparação para o parto</summary>
+            <p>Preparação para o parto e atuação da fisioterapia no trabalho de parto.</p>
+          </details>
+          <details class="acordeao__item" name="modulos">
+            <summary>Módulo 6 · Pós-parto</summary>
+            <p>Recuperação perineal, diástase abdominal e retorno ao exercício.</p>
+          </details>
+          <details class="acordeao__item" name="modulos">
+            <summary>Módulo 7 · Raciocínio clínico na prática</summary>
+            <p>Casos, quando encaminhar e como montar o plano de tratamento.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 6. PARA QUEM É / NÃO É ========== -->
+    <section class="secao secao--para-quem" id="para-quem" aria-labelledby="para-quem-titulo">
+      <div class="container">
+        <h2 id="para-quem-titulo" class="secao__titulo">Este curso é para você?</h2>
+        <div class="para-quem__grid">
+          <div class="para-quem__coluna para-quem__coluna--sim">
+            <h3>É para você se…</h3>
+            <ul>
+              <li>Você é fisioterapeuta e quer começar a atender Saúde da Mulher.</li>
+              <li>Você já atende e quer organizar o raciocínio clínico.</li>
+              <li>Você está nos últimos períodos e quer chegar preparada ao estágio.</li>
+              <li>Você atende gestantes no pilates ou na academia e quer segurança.</li>
+            </ul>
+          </div>
+          <div class="para-quem__coluna para-quem__coluna--nao">
+            <h3>Não é para você se…</h3>
+            <ul>
+              <li>Você procura um protocolo pronto para aplicar igual em todas as pacientes.</li>
+              <li>Você não é fisioterapeuta nem estudante de fisioterapia.</li>
+              <li>Você espera substituir a prática supervisionada por um curso online.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 7. INSTRUTORA ========== -->
+    <section class="secao secao--instrutora" id="instrutora" aria-labelledby="instrutora-titulo">
+      <div class="container instrutora__grid">
+        <figure class="instrutora__foto">
+          <img src="assets/img/camila-rocha-consultorio-960.webp"
+               srcset="assets/img/camila-rocha-consultorio-480.webp 480w, assets/img/camila-rocha-consultorio-720.webp 720w, assets/img/camila-rocha-consultorio-960.webp 960w"
+               sizes="(min-width: 900px) 440px, 360px"
+               alt="Gestante sentada em uma bola suíça fazendo exercício de respiração"
+               width="960" height="1200" loading="lazy" decoding="async">
+        </figure>
+        <div class="instrutora__texto">
+          <h2 id="instrutora-titulo" class="secao__titulo">Quem vai te ensinar</h2>
+          <p>Camila Rocha é fisioterapeuta especialista em Saúde da Mulher, com cerca de 10 anos de atendimento a gestantes, puérperas e mulheres com disfunções do assoalho pélvico. Há 5 anos ministra turmas presenciais para fisioterapeutas, e mais de 600 profissionais já passaram por elas.</p>
+          <p>O Saúde da Mulher na Prática reúne o que ela gostaria de ter aprendido no início da carreira: menos protocolo decorado e mais raciocínio para entender cada paciente.</p>
+          <p class="instrutora__registro">Camila Rocha · Fisioterapeuta · CREFITO-3/000000-F</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 8. NÚMEROS (faixa) + DEPOIMENTOS ========== -->
+    <section class="faixa-numeros" aria-label="Números da instrutora">
+      <ul class="container numeros">
+        <li><strong>+600</strong> fisioterapeutas formadas nas turmas presenciais</li>
+        <li><strong>10 anos</strong> de consultório</li>
+        <li><strong>4,9/5</strong> nas avaliações das turmas</li>
+      </ul>
+    </section>
+
+    <section class="secao secao--depoimentos" id="depoimentos" aria-labelledby="depoimentos-titulo">
+      <div class="container">
+
+        <h2 id="depoimentos-titulo" class="secao__titulo">O que dizem as alunas das turmas presenciais</h2>
+
+        <!-- Depoimentos em destaque, trocando sozinhos (js/depoimentos.js).
+             Sem JS: os cinco aparecem um embaixo do outro.
+             Com JS: um por vez no "palco" e, ao lado, a lista com a barra de tempo.
+             A lista é só visual (aria-hidden): o conteúdo completo está nos <figure>. -->
+        <div class="depoimentos" data-depoimentos>
+          <div class="depoimentos__palco">
+            <figure class="depoimento" data-depoimento>
+              <blockquote><p>Eu evitava pacientes com queixa pélvica porque não me sentia preparada. Depois do curso, comecei a fazer a avaliação completa e hoje metade da minha agenda é de Saúde da Mulher.</p></blockquote>
+              <figcaption class="depoimento__pessoa">
+                <span class="depoimento__iniciais" aria-hidden="true">JM</span>
+                <span><strong>Juliana Mendes</strong><br>Fisioterapeuta · Campinas (SP)</span>
+              </figcaption>
+            </figure>
+            <figure class="depoimento" data-depoimento>
+              <blockquote><p>O que mais mudou foi o raciocínio. Antes eu seguia protocolo; agora eu entendo o que estou avaliando e consigo justificar cada escolha, inclusive para a equipe médica da clínica.</p></blockquote>
+              <figcaption class="depoimento__pessoa">
+                <span class="depoimento__iniciais" aria-hidden="true">PL</span>
+                <span><strong>Patrícia Lopes</strong><br>Fisioterapeuta · Belo Horizonte (MG)</span>
+              </figcaption>
+            </figure>
+            <figure class="depoimento" data-depoimento>
+              <blockquote><p>Fiz no último ano da faculdade e cheguei ao estágio de Saúde da Mulher sabendo o que fazer. A supervisora perguntou onde eu tinha aprendido a avaliação.</p></blockquote>
+              <figcaption class="depoimento__pessoa">
+                <span class="depoimento__iniciais" aria-hidden="true">LA</span>
+                <span><strong>Larissa Andrade</strong><br>Estudante de Fisioterapia · Curitiba (PR)</span>
+              </figcaption>
+            </figure>
+            <figure class="depoimento" data-depoimento>
+              <blockquote><p>Trabalho com pilates e sempre recebia gestantes. Hoje sei adaptar os exercícios por trimestre com segurança, e as alunas percebem a diferença.</p></blockquote>
+              <figcaption class="depoimento__pessoa">
+                <span class="depoimento__iniciais" aria-hidden="true">RF</span>
+                <span><strong>Renata Faria</strong><br>Fisioterapeuta · Salvador (BA)</span>
+              </figcaption>
+            </figure>
+            <figure class="depoimento" data-depoimento>
+              <blockquote><p>As fichas de avaliação valeram o curso. Uso em todos os atendimentos e elas me ajudaram a organizar minha primeira consulta.</p></blockquote>
+              <figcaption class="depoimento__pessoa">
+                <span class="depoimento__iniciais" aria-hidden="true">MT</span>
+                <span><strong>Mariana Teixeira</strong><br>Fisioterapeuta · Recife (PE)</span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="depoimentos__lateral">
+            <ol class="depoimentos__lista" aria-hidden="true">
+            <li class="depoimentos__item" data-depoimento-item>
+              <p><strong>Juliana Mendes</strong> · Campinas (SP)</p>
+              <p class="depoimentos__trecho">Eu evitava pacientes com queixa pélvica porque não me…</p>
+              <span class="depoimentos__progresso"></span>
+            </li>
+            <li class="depoimentos__item" data-depoimento-item>
+              <p><strong>Patrícia Lopes</strong> · Belo Horizonte (MG)</p>
+              <p class="depoimentos__trecho">O que mais mudou foi o raciocínio. Antes eu…</p>
+              <span class="depoimentos__progresso"></span>
+            </li>
+            <li class="depoimentos__item" data-depoimento-item>
+              <p><strong>Larissa Andrade</strong> · Curitiba (PR)</p>
+              <p class="depoimentos__trecho">Fiz no último ano da faculdade e cheguei ao…</p>
+              <span class="depoimentos__progresso"></span>
+            </li>
+            <li class="depoimentos__item" data-depoimento-item>
+              <p><strong>Renata Faria</strong> · Salvador (BA)</p>
+              <p class="depoimentos__trecho">Trabalho com pilates e sempre recebia gestantes. Hoje sei…</p>
+              <span class="depoimentos__progresso"></span>
+            </li>
+            <li class="depoimentos__item" data-depoimento-item>
+              <p><strong>Mariana Teixeira</strong> · Recife (PE)</p>
+              <p class="depoimentos__trecho">As fichas de avaliação valeram o curso. Uso em…</p>
+              <span class="depoimentos__progresso"></span>
+            </li>
+            </ol>
+            <button class="depoimentos__pausar" type="button" data-depoimentos-pausar aria-pressed="false">
+              Pausar depoimentos
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 9. OFERTA (+ bônus + lista de espera) ========== -->
+    <section class="secao secao--oferta" id="oferta" aria-labelledby="oferta-titulo">
+      <div class="container oferta__grid">
+
+        <div class="oferta__itens">
+          <h2 id="oferta-titulo" class="secao__titulo">Tudo o que você recebe</h2>
+          <ul class="stack">
+            <li class="stack__item">
+              <span class="stack__nome">Curso Saúde da Mulher na Prática: 7 módulos, cerca de 30h</span>
+              <span class="stack__valor">R$ 997</span>
+            </li>
+            <li class="stack__item">
+              <span class="stack__nome">Certificado de conclusão</span>
+              <span class="stack__valor">incluso</span>
+            </li>
+            <li class="stack__item stack__item--bonus">
+              <span class="stack__nome"><em>Bônus</em> Fichas de avaliação prontas (PDF editável)</span>
+              <span class="stack__valor">R$ 97</span>
+            </li>
+            <li class="stack__item stack__item--bonus">
+              <span class="stack__nome"><em>Bônus</em> Encontros ao vivo mensais por 12 meses</span>
+              <span class="stack__valor">R$ 600</span>
+            </li>
+            <li class="stack__item stack__item--bonus">
+              <span class="stack__nome"><em>Bônus</em> Comunidade de alunas e alunos</span>
+              <span class="stack__valor">R$ 197</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Card de preço: conteúdo muda por fase -->
+        <div class="preco">
+          <p class="preco__ancora">Valor total <s data-preco="valorTotal">R$ 1.891</s></p>
+
+          <!-- Pré-lançamento: preço + formulário da lista de espera -->
+          <div data-mostrar="pre">
+            <p class="preco__label">A partir de <span data-data="carrinhoAbre" data-formato="dia">03/11</span> por</p>
+            <p class="preco__valor" data-preco="preco">R$ 597</p>
+            <p class="preco__destaque">Na lista de espera: <strong data-preco="precoLista">R$ 497</strong> nas primeiras 48h</p>
+          </div>
+
+          <!-- Carrinho aberto -->
+          <div data-mostrar="aberto">
+            <p class="preco__label">Hoje por</p>
+            <p class="preco__valor" data-preco="preco">R$ 597</p>
+            <p class="preco__parcelas">ou em até <span data-parcelas>12</span>x no cartão</p>
+            <p class="preco__destaque">
+              Está na lista de espera? Seu valor é <strong data-preco="precoLista">R$ 497</strong> até <span data-data="condicaoAte">05/11, às 20h</span>.
+            </p>
+            <a class="btn btn--cta" href="#" data-cta="checkout">Quero garantir minha vaga</a>
+            <a class="preco__link-lista" href="#" data-cta="checkout-lista">Estou na lista de espera</a>
+            <p class="microcopy">Pagamento seguro pela Hotmart. Cartão, Pix ou boleto.</p>
+            <p class="preco__urgencia">As inscrições ficam abertas só até <span data-data="carrinhoFecha">10/11, às 23h59</span>. Depois disso, a próxima turma ainda não tem data.</p>
+          </div>
+
+          <!-- Encerrado -->
+          <div data-mostrar="encerrado">
+            <p class="preco__label">Inscrições encerradas</p>
+            <p class="preco__destaque">Entre na lista para saber primeiro quando a próxima turma abrir.</p>
+          </div>
+
+          <!-- Formulário da lista de espera (pré-lançamento e encerrado) -->
+          <form class="form-lista" id="lista-espera" data-form-lista data-mostrar="pre encerrado" novalidate>
+            <div class="campo">
+              <label for="nome">Nome</label>
+              <input id="nome" name="nome" type="text" autocomplete="name" required>
+              <p class="campo__erro" id="nome-erro" aria-live="polite"></p>
+            </div>
+            <div class="campo">
+              <label for="email">E-mail</label>
+              <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required>
+              <p class="campo__erro" id="email-erro" aria-live="polite"></p>
+            </div>
+            <div class="campo">
+              <label for="whatsapp">WhatsApp (com DDD)</label>
+              <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="numeric" placeholder="(11) 91234-5678" required>
+              <p class="campo__erro" id="whatsapp-erro" aria-live="polite"></p>
+            </div>
+            <div class="campo campo--checkbox">
+              <input id="consentimento" name="consentimento" type="checkbox" required>
+              <label for="consentimento">Aceito receber comunicações sobre o curso por e-mail e WhatsApp, conforme a <a href="politica-de-privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.</label>
+              <p class="campo__erro" id="consentimento-erro" aria-live="polite"></p>
+            </div>
+
+            <!-- Honeypot anti-spam: invisível para pessoas, robôs costumam preencher -->
+            <div class="campo-oculto" aria-hidden="true">
+              <label for="empresa">Empresa</label>
+              <input id="empresa" name="empresa" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <button class="btn btn--cta btn--bloco" type="submit">Quero entrar na lista</button>
+            <p class="form-lista__status" data-form-status role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 10. GARANTIA ========== -->
+    <section class="secao secao--garantia" id="garantia" aria-labelledby="garantia-titulo">
+      <div class="container container--texto garantia">
+        <div class="garantia__selo" aria-hidden="true">
+          <span>7</span>dias
+        </div>
+        <div>
+          <h2 id="garantia-titulo" class="secao__titulo">Garantia incondicional de 7 dias</h2>
+          <p>Entre no curso, assista às aulas, baixe as fichas. Se em até 7 dias você sentir que o Saúde da Mulher na Prática não é para você, basta pedir o reembolso pela própria Hotmart e você recebe 100% do valor de volta. Sem perguntas e sem burocracia.</p>
+          <p class="garantia__assinatura">O risco fica todo comigo. <span>Camila Rocha</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 11. OBJEÇÕES ========== -->
+    <section class="secao secao--objecoes" id="objecoes" aria-labelledby="objecoes-titulo">
+      <div class="container container--texto">
+        <h2 id="objecoes-titulo" class="secao__titulo">Talvez você esteja pensando…</h2>
+        <dl class="objecoes">
+          <dt>"Mas dá para aprender avaliação do assoalho pélvico online?"</dt>
+          <dd>Dá para aprender a base que sustenta toda avaliação: anatomia, raciocínio, o que observar e como conduzir. As demonstrações em modelo anatômico e as simulações mostram cada etapa em detalhe. A prática supervisionada continua sendo importante, e o curso te prepara para chegar a ela sabendo o que está fazendo.</dd>
+
+          <dt>"Mas eu ainda sou estudante. Serve para mim?"</dt>
+          <dd>Serve, principalmente para quem está nos últimos períodos. Você chega ao estágio e ao primeiro atendimento com uma base que a maioria só constrói anos depois.</dd>
+
+          <dt>"Mas eu não tenho tempo."</dt>
+          <dd>As aulas são gravadas e curtas, organizadas para caber na rotina de quem já atende. Com cerca de 3 horas por semana, você conclui o curso em uns dois meses, e tem 1 ano de acesso para ir no seu ritmo.</dd>
+
+          <dt>"Mas eu já fiz curso e não consegui aplicar."</dt>
+          <dd>Muitos cursos ensinam técnica solta. Aqui o foco é o raciocínio: você aprende a decidir o que fazer com cada paciente. E quando a dúvida aparecer no consultório, você leva o caso para o encontro ao vivo.</dd>
+
+          <dt>"Mas está caro."</dt>
+          <dd>Compare com o valor de uma pós-graduação ou de um curso presencial com passagem e hospedagem. E você tem 7 dias para assistir às aulas e decidir se o curso é para você.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ========== 12. FAQ ========== -->
+    <section class="secao secao--faq" id="faq" aria-labelledby="faq-titulo">
+      <div class="container container--texto">
+        <h2 id="faq-titulo" class="secao__titulo">Perguntas frequentes</h2>
+        <div class="acordeao" data-acordeao>
+          <details class="acordeao__item" name="faq">
+            <summary>Quanto tempo por semana preciso dedicar?</summary>
+            <p>Com cerca de 3 horas por semana, você conclui em uns dois meses. Como o acesso dura 1 ano, você pode ir no seu ritmo.</p>
+          </details>
+          <details class="acordeao__item" name="faq">
+            <summary>O curso serve para quem está começando? E para quem já atende na área?</summary>
+            <p>Sim para os dois. Quem está começando constrói a base do zero. Quem já atende organiza o raciocínio clínico e aprofunda avaliação, gestação e pós-parto.</p>
+          </details>
+          <details class="acordeao__item" name="faq">
+            <summary>E se eu não gostar?</summary>
+            <p>Você tem 7 dias de garantia. Se não for para você, pede o reembolso pela Hotmart e recebe 100% do valor de volta.</p>
+          </details>
+          <details class="acordeao__item" name="faq">
+            <summary>Como funciona o acesso?</summary>
+            <p>Logo após a confirmação do pagamento, você recebe por e-mail o acesso à área de membros da Hotmart. As aulas podem ser assistidas no computador ou no celular.</p>
+          </details>
+          <details class="acordeao__item" name="faq">
+            <summary>Tenho suporte para tirar dúvidas?</summary>
+            <p>Sim. Você pode deixar dúvidas nas aulas e participar dos encontros ao vivo mensais com a Camila, além da comunidade de alunos.</p>
+          </details>
+          <details class="acordeao__item" name="faq">
+            <summary>O curso dá certificado?</summary>
+            <p>Sim. Ao concluir as aulas, você emite o certificado de conclusão direto na plataforma.</p>
+          </details>
+          <details class="acordeao__item" name="faq">
+            <summary>Quais são as formas de pagamento?</summary>
+            <p>Cartão de crédito em até 12x, Pix ou boleto, com pagamento processado pela Hotmart.</p>
+          </details>
+          <details class="acordeao__item" name="faq">
+            <summary>Como funciona a lista de espera?</summary>
+            <p>Você deixa nome, e-mail e WhatsApp e recebe o link de compra assim que o carrinho abrir, em <span data-data="carrinhoAbre">03/11</span>. Quem está na lista paga <span data-preco="precoLista">R$ 497</span> nas primeiras 48h.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 13. CTA FINAL + PS ========== -->
+    <section class="secao secao--cta-final" id="cta-final" aria-labelledby="cta-final-titulo">
+      <div class="container container--texto">
+        <h2 id="cta-final-titulo" class="secao__titulo">A próxima paciente pode chegar amanhã</h2>
+        <p>Pense na gestante com dor, na mãe que perde urina e não conta para ninguém, na mulher que já ouviu de três profissionais que "isso é normal". Elas precisam de uma fisioterapeuta que saiba avaliar, explicar e tratar.</p>
+        <p class="cta-final__destaque">Essa fisioterapeuta pode ser você.</p>
+
+        <div data-mostrar="pre encerrado">
+          <a class="btn btn--cta" href="#lista-espera" data-cta="lista">Entrar na lista de espera</a>
+          <p class="microcopy">Gratuito. Condição especial de <span data-preco="precoLista">R$ 497</span> nas primeiras 48h.</p>
+        </div>
+        <div data-mostrar="aberto">
+          <a class="btn btn--cta" href="#oferta">Quero garantir minha vaga</a>
+          <p class="microcopy">Acesso imediato. Certificado. Garantia de 7 dias.</p>
+        </div>
+
+        <p class="ps">
+          <strong>PS:</strong> Lembre que você tem 7 dias para assistir às aulas e decidir. Se não for para você, recebe 100% de volta. E se você está na lista de espera, sua condição de <span data-preco="precoLista">R$ 497</span> vale só até <span data-data="condicaoAte">05/11, às 20h</span>.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== RODAPÉ ========== -->
+  <footer class="rodape">
+    <div class="container rodape__inner">
+      <p class="rodape__marca">Saúde da Mulher na Prática</p>
+      <p>Camila Rocha · Fisioterapeuta · CREFITO-3/000000-F</p>
+      <nav aria-label="Links legais">
+        <a href="politica-de-privacidade.html">Política de Privacidade</a>
+      </nav>
+      <p class="rodape__legal">Pagamento processado pela Hotmart. Este site não é afiliado ao Facebook nem ao Google.</p>
+      <p class="rodape__legal">Projeto conceitual desenvolvido para portfólio. Instrutora, curso e depoimentos são fictícios.</p>
+    </div>
+  </footer>
+
+  <!-- ========== ELEMENTOS FLUTUANTES ========== -->
+  <aside aria-label="Atalhos">
+
+  <!-- Barra fixa de CTA no celular (aparece depois do hero, via JS) -->
+  <div class="barra-cta" data-barra-cta hidden>
+    <a class="btn btn--cta btn--bloco" href="#lista-espera" data-cta="lista" data-mostrar="pre encerrado">Entrar na lista de espera</a>
+    <a class="btn btn--cta btn--bloco" href="#oferta" data-mostrar="aberto">Garantir minha vaga · <span data-preco="preco">R$ 597</span></a>
+  </div>
+
+  <!-- Botão de WhatsApp (link montado pelo JS a partir do config.js) -->
+  <a class="whatsapp" href="#" data-whatsapp target="_blank" rel="noopener" aria-label="Tirar dúvidas pelo WhatsApp">
+    <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 7L3 29l6.4-2c2 1.1 4.3 1.7 6.6 1.7 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.4c-2.1 0-4.2-.6-6-1.7l-.4-.3-3.8 1.2 1.2-3.7-.3-.4a10.4 10.4 0 0 1-1.7-5.7C5 9.9 9.9 5.2 16 5.2s11 4.7 11 10.6-4.9 10.6-11 10.6zm6-7.9c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2l-1 1.3c-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.7-1.6-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.6.4-.6c.1-.2 0-.4 0-.6l-1.1-2.5c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.2 1.4 3.4c.2.2 2.4 3.6 5.8 5 .8.4 1.4.6 1.9.7.8.2 1.5.2 2.1.1.6-.1 2-.8 2.2-1.6.3-.8.3-1.5.2-1.6l-.6-.3z"/>
+    </svg>
+  </a>
+  </aside>
+
+</body>
+</html>

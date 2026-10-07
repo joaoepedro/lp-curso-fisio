@@ -1,0 +1,59 @@
+/* ============================================================
+   VARIÁVEIS (design tokens)
+   A identidade visual inteira mora aqui. Para mudar uma cor
+   ou fonte do site, altere só este arquivo.
+   ============================================================ */
+
+:root {
+  /* ---------- Cores ---------- */
+  --cor-nevoa: #F3F1F5;      /* fundo principal */
+  --cor-branco: #FFFFFF;     /* fundo alternado e cards */
+  --cor-berinjela: #2A1530;  /* texto e seções escuras */
+  --cor-texto-suave: #5D4A62;/* texto secundário */
+  --cor-vinho: #7A2848;      /* cor da marca */
+  --cor-vinho-escuro: #5E1C37;
+  --cor-oliva: #4A6334;      /* EXCLUSIVA dos botões de ação */
+  --cor-oliva-escuro: #3D532A;
+  --cor-argila: #EBCFC8;     /* superfícies de destaque */
+  --cor-ocre: #C2913A;       /* detalhes e foco */
+  --cor-linha: #E3DDE6;      /* bordas e divisores */
+  --cor-erro: #B3261E;
+
+  /* ---------- Tipografia ---------- */
+  --fonte-titulo: "Young Serif", Georgia, "Times New Roman", serif;
+  --fonte-texto: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Escala fluida: cresce suavemente entre celular e desktop */
+  --texto-pequeno: 0.875rem;                               /* 14px */
+  --texto-base: 1.0625rem;                                 /* 17px */
+  --texto-grande: clamp(1.125rem, 1rem + 0.4vw, 1.25rem);  /* 18 → 20px */
+  --titulo-3: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);      /* 20 → 24px */
+  --titulo-2: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);      /* 28 → 40px */
+  --titulo-1: clamp(2rem, 1.3rem + 2.6vw, 3.25rem);        /* 32 → 52px */
+
+  /* ---------- Espaçamento ---------- */
+  --espaco-1: 0.5rem;
+  --espaco-2: 1rem;
+  --espaco-3: 1.5rem;
+  --espaco-4: 2rem;
+  --espaco-5: 3rem;
+  --espaco-secao: clamp(4rem, 3rem + 4vw, 7rem);
+
+  /* ---------- Layout ---------- */
+  --largura-max: 1120px;
+  --largura-texto: 680px;  /* ~65 caracteres por linha */
+  --margem-lateral: 1.5rem;  /* 24px no celular */
+
+  /* ---------- Formas ---------- */
+  --raio-pequeno: 12px;
+  --raio-medio: 20px;
+  --raio-pilula: 999px;
+  /* A "bacia": topo levemente arredondado, base em curva */
+  --forma-bacia: 28px 28px 50% 50% / 28px 28px 42% 42%;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --margem-lateral: 2rem;
+  }
+}

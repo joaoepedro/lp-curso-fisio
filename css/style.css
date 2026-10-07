@@ -1,0 +1,1749 @@
+/* ============================================================
+   ESTILOS DA PÁGINA
+   Mobile-first: as regras base são para o celular e os
+   @media (min-width: …) acrescentam ajustes para telas maiores.
+
+   Sumário
+   1.  Base
+   2.  Fases da página (pré-lançamento / aberto / encerrado)
+   3.  Utilitários de layout
+   4.  Botões
+   5.  Aviso, skip link e cabeçalho
+   6.  Hero e contador
+   7.  Seções (problema → CTA final)
+   8.  Oferta, preço e formulário
+   9.  Rodapé
+   10. Elementos flutuantes (barra de CTA, WhatsApp, seletor)
+   11. Páginas internas (obrigado e política)
+   12. Animação de entrada
+   ============================================================ */
+
+
+/* ==================== 1. BASE ==================== */
+
+html {
+  scroll-behavior: smooth;
+  /* Ao pular para uma âncora, deixa um respiro no topo */
+  scroll-padding-top: var(--espaco-3);
+}
+
+body {
+  background: var(--cor-nevoa);
+  color: var(--cor-berinjela);
+  font-family: var(--fonte-texto);
+  font-size: var(--texto-base);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--fonte-titulo);
+  font-weight: 400;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--cor-vinho);
+  text-underline-offset: 0.18em;
+}
+
+strong {
+  font-weight: 700;
+}
+
+/* Foco visível para quem navega pelo teclado */
+:focus-visible {
+  outline: 3px solid var(--cor-ocre);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+
+/* ==================== 2. FASES DA PÁGINA ====================
+   O <html> recebe data-fase="pre|aberto|encerrado" (via JS).
+   Um elemento com data-mostrar="pre encerrado" só aparece nessas fases.
+   O seletor ~= procura uma palavra dentro de uma lista separada por espaços. */
+
+html[data-fase="pre"] [data-mostrar]:not([data-mostrar~="pre"]),
+html[data-fase="aberto"] [data-mostrar]:not([data-mostrar~="aberto"]),
+html[data-fase="encerrado"] [data-mostrar]:not([data-mostrar~="encerrado"]) {
+  display: none !important;
+}
+
+
+/* ==================== 3. UTILITÁRIOS DE LAYOUT ==================== */
+
+.container {
+  width: 100%;
+  max-width: var(--largura-max);
+  margin-inline: auto;
+  padding-inline: var(--margem-lateral);
+}
+
+.container--texto {
+  max-width: calc(var(--largura-texto) + 2 * var(--margem-lateral));
+}
+
+.secao {
+  padding-block: var(--espaco-secao);
+}
+
+.secao__titulo {
+  font-size: var(--titulo-2);
+  margin-bottom: var(--espaco-3);
+}
+
+.secao__intro {
+  font-size: var(--texto-grande);
+  color: var(--cor-texto-suave);
+  margin-bottom: var(--espaco-4);
+}
+
+.microcopy {
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-suave);
+  margin-top: var(--espaco-2);
+}
+
+
+/* ==================== 4. BOTÕES ==================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 56px;              /* área de toque confortável */
+  padding: 1rem 1.75rem;
+  border: 0;
+  border-radius: var(--raio-pilula);
+  font-family: var(--fonte-texto);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* Verde-oliva: a cor reservada para ação */
+.btn--cta {
+  background: var(--cor-oliva);
+  color: var(--cor-branco);
+}
+
+.btn--cta:hover {
+  background: var(--cor-oliva-escuro);
+}
+
+/* Variação para fundos escuros (card de preço) */
+.btn--claro {
+  background: var(--cor-branco);
+  color: var(--cor-oliva);
+}
+
+.btn--claro:hover {
+  background: #F1F4EC;
+}
+
+.btn--secundario {
+  background: transparent;
+  color: var(--cor-vinho);
+  box-shadow: inset 0 0 0 2px var(--cor-vinho);
+}
+
+.btn--secundario:hover {
+  background: var(--cor-vinho);
+  color: var(--cor-branco);
+}
+
+.btn--pequeno {
+  min-height: 44px;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.9375rem;
+}
+
+.btn--bloco {
+  width: 100%;
+}
+
+
+/* ==================== 5. AVISO, SKIP LINK E CABEÇALHO ==================== */
+
+.aviso-conceitual {
+  background: var(--cor-berinjela);
+  color: #E9DFEC;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  text-align: center;
+  padding: 0.5rem var(--margem-lateral);
+}
+
+/* Fora da tela até receber foco pelo teclado (Tab) */
+.skip-link {
+  position: absolute;
+  top: var(--espaco-1);
+  left: var(--espaco-1);
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--cor-berinjela);
+  color: var(--cor-branco);
+  border-radius: var(--raio-pequeno);
+  font-weight: 600;
+  transform: translateY(-200%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.cabecalho__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-2);
+  padding-block: var(--espaco-2);
+}
+
+.marca {
+  font-family: var(--fonte-titulo);
+  font-size: 1.0625rem;
+  color: var(--cor-vinho);
+  text-decoration: none;
+}
+
+/* No celular o botão do cabeçalho some: a barra fixa de CTA cumpre esse papel */
+.cabecalho .btn {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .cabecalho .btn {
+    display: inline-flex;
+  }
+}
+
+
+/* ==================== 6. HERO E CONTADOR ==================== */
+
+.hero {
+  padding-block: var(--espaco-3) var(--espaco-secao);
+}
+
+.hero__grid {
+  display: grid;
+  gap: var(--espaco-5);
+  align-items: center;
+}
+
+/* min-width: 0 deixa a coluna do grid encolher abaixo do conteúdo mais largo */
+.hero__texto {
+  min-width: 0;
+}
+
+/* Celulares bem estreitos (320px): contador um pouco mais compacto */
+@media (max-width: 359px) {
+  .contador__numeros {
+    gap: 0.375rem;
+  }
+
+  .contador__item {
+    min-width: 3.5rem;
+  }
+}
+
+.hero__selos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: var(--espaco-3);
+}
+
+.hero__selo {
+  display: inline-block;
+  max-width: 100%;  /* em telas bem estreitas o texto quebra em vez de vazar */
+  font-size: var(--texto-pequeno);
+  font-weight: 600;
+  color: var(--cor-vinho);
+  background: var(--cor-argila);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--raio-pilula);
+}
+
+.hero__titulo {
+  font-size: var(--titulo-1);
+  line-height: 1.1;
+  margin-bottom: var(--espaco-3);
+  max-width: 22ch;
+}
+
+.hero__subtitulo {
+  font-size: var(--texto-grande);
+  color: var(--cor-texto-suave);
+  max-width: 52ch;
+  margin-bottom: var(--espaco-4);
+}
+
+/* Foto com a forma de "bacia" e o traço ocre acompanhando a curva */
+.hero__foto {
+  position: relative;
+  /* -28px deixa espaço para o traço ocre não encostar na borda da tela */
+  width: min(calc(100% - 28px), 320px);
+  justify-self: center;
+  margin-bottom: var(--espaco-3);
+}
+
+.hero__foto img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--forma-bacia);
+  background: var(--cor-argila);  /* aparece enquanto a imagem carrega */
+}
+
+.hero__foto::after {
+  content: "";
+  position: absolute;
+  inset: auto -14px -14px -14px;
+  height: 55%;
+  border: 2px solid var(--cor-ocre);
+  border-top: 0;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  pointer-events: none;
+}
+
+@media (min-width: 900px) {
+  .hero {
+    padding-top: var(--espaco-4);
+  }
+
+  .hero__grid {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: var(--espaco-5);
+  }
+
+  .hero__foto {
+    width: 100%;
+    max-width: 400px;
+    justify-self: end;
+  }
+}
+
+/* No celular, contador e botão ficam centralizados na tela */
+@media (max-width: 899px) {
+  .contador,
+  .hero__cta {
+    text-align: center;
+  }
+
+  .contador__numeros {
+    justify-content: center;
+  }
+}
+
+/* Contador regressivo */
+.contador {
+  margin-bottom: var(--espaco-4);
+}
+
+.contador__rotulo {
+  font-size: var(--texto-pequeno);
+  font-weight: 600;
+  margin-bottom: var(--espaco-1);
+}
+
+.contador__numeros {
+  display: flex;
+  gap: 0.625rem;
+}
+
+.contador__item {
+  min-width: 4.25rem;
+  padding: 0.625rem 0.5rem;
+  background: var(--cor-branco);
+  border-radius: var(--raio-pequeno);
+  text-align: center;
+}
+
+.contador__item span {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-size: 1.625rem;
+  line-height: 1.1;
+  color: var(--cor-vinho);
+  font-variant-numeric: tabular-nums;  /* números não "pulam" ao mudar */
+}
+
+.contador__item small {
+  font-size: 0.75rem;
+  color: var(--cor-texto-suave);
+}
+
+
+/* ==================== 7. SEÇÕES ==================== */
+
+/* ---------- Problema ----------
+   Fundo branco que termina em curva de "bacia" sobre a seção seguinte. */
+.secao--problema {
+  background: var(--cor-branco);
+  border-radius: 0 0 50% 50% / 0 0 64px 64px;
+  padding-bottom: calc(var(--espaco-secao) + 32px);
+}
+
+@media (min-width: 768px) {
+  .secao--problema {
+    border-radius: 0 0 50% 50% / 0 0 120px 120px;
+  }
+}
+
+/* ---------- Trajeto (as três pacientes) ----------
+   Faixas que saem da borda esquerda da tela, cada uma mais comprida
+   que a anterior, formando uma escada pela ponta direita. Elas se
+   sobrepõem um pouco na vertical e, com mix-blend-mode: multiply, a
+   área sobreposta vira uma terceira cor. O texto de cada faixa fica
+   no "degrau" (a parte que avança além da faixa anterior).
+
+   Para encostar na borda da tela, o trajeto "puxa" para a esquerda a
+   distância entre a borda e o conteúdo (--recuo). */
+
+.secao--problema {
+  overflow-x: clip;  /* esconde as faixas enquanto estão fora da tela (animação) */
+  padding-top: 0;    /* a primeira faixa encosta no topo da seção */
+}
+
+.trajeto {
+  --cor-etapa-1: #EBCFC8;
+  --cor-etapa-2: #DDA9B3;
+  --cor-etapa-3: #A24A68;
+  --cor-etapa-4: var(--cor-berinjela);
+
+  /* Distância da borda da tela até o início do conteúdo */
+  --recuo: calc(max(0px, (100vw - var(--largura-max)) / 2) + var(--margem-lateral));
+  /* Largura do conteúdo (o trajeto é mais largo que ele) */
+  --conteudo: calc(100% - var(--recuo));
+
+  --largura-texto-faixa: calc(0.88 * var(--conteudo));  /* área do texto em cada faixa */
+  --degrau: calc(0.04 * var(--conteudo));               /* quanto cada faixa avança */
+  --sobreposicao: 1.75rem;
+  --folga: 1.75rem;                                      /* respiro interno do texto */
+
+  width: calc(100% + var(--recuo));
+  margin-left: calc(-1 * var(--recuo));
+  margin-bottom: var(--espaco-secao);
+  isolation: isolate;  /* a mistura de cores fica restrita ao trajeto */
+}
+
+/* Cada degrau começa na borda esquerda; n = posição na escada (0 a 3) */
+.degrau {
+  --avanco: calc(var(--recuo) + var(--n) * var(--degrau));
+  width: calc(var(--avanco) + var(--largura-texto-faixa));
+}
+
+.degrau--1 { --n: 0; }
+.degrau--2 { --n: 1; }
+.degrau--3 { --n: 2; }
+.degrau--4 { --n: 3; }
+
+.degrau + .degrau,
+.trajeto__paradas + .degrau {
+  margin-top: calc(-1 * var(--sobreposicao));
+}
+
+/* A faixa tem a cor e o texto. O texto começa no degrau. */
+.faixa {
+  padding: 2.5rem var(--folga) 2.5rem calc(var(--avanco) + var(--folga));
+  border-radius: 0 12px 12px 0;  /* reta do lado que sai da borda */
+  mix-blend-mode: multiply;
+}
+
+.faixa--1 { background: var(--cor-etapa-1); }
+.faixa--2 { background: var(--cor-etapa-2); }
+.faixa--3 { background: var(--cor-etapa-3); color: var(--cor-branco); }
+.faixa--4 { background: var(--cor-etapa-4); color: var(--cor-branco); }
+
+.faixa__etapa {
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.faixa__numero {
+  font-family: var(--fonte-titulo);
+  font-size: 1.75rem;
+  line-height: 1.1;
+  margin: 0.125rem 0 0.375rem;
+}
+
+.faixa--1 .faixa__numero,
+.faixa--2 .faixa__numero {
+  color: var(--cor-vinho);
+}
+
+.faixa__contexto {
+  font-size: 0.9375rem;
+  color: #D9C9DD;
+  margin-bottom: var(--espaco-1);
+}
+
+.faixa__pergunta {
+  font-family: var(--fonte-titulo);
+  font-size: 1.375rem;
+  line-height: 1.25;
+}
+
+/* Quem pediu "reduzir movimento": a faixa só esmaece, sem deslizar
+   (o JS usa .trajeto--suave em vez de .trajeto--animado) */
+.trajeto--suave .faixa {
+  opacity: 0;
+}
+
+.trajeto--suave .is-visivel .faixa {
+  opacity: 1;
+  transition: opacity 0.8s ease !important;  /* !important vence o reset de movimento */
+}
+
+/* ---------- Animação: cada faixa sai da borda esquerda ----------
+   Só vale quando o JS adiciona .trajeto--animado (sem JS, tudo aparece normal).
+   Escondida: a faixa fica 100% para fora, à esquerda, sem transição.
+   Quando o JS marca .is-visivel, ela desliza para dentro. */
+.trajeto--animado .faixa {
+  transform: translateX(-100%);
+}
+
+.trajeto--animado .is-visivel .faixa {
+  transform: none;
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Tablet: área de texto menor e degraus maiores */
+@media (min-width: 768px) {
+  .trajeto {
+    --largura-texto-faixa: calc(0.64 * var(--conteudo));
+    --degrau: calc(0.12 * var(--conteudo));
+  }
+}
+
+/* Desktop: degraus largos */
+@media (min-width: 1024px) {
+  .trajeto {
+    --largura-texto-faixa: calc(0.43 * var(--conteudo));
+    --degrau: calc(0.19 * var(--conteudo));
+    --sobreposicao: 2rem;
+    --folga: 2.25rem;
+  }
+
+  .faixa {
+    padding-block: 2.75rem;
+  }
+}
+
+/* Título + lista: uma coluna no celular, lado a lado no desktop */
+.dores {
+  display: grid;
+  gap: var(--espaco-2);
+}
+
+@media (min-width: 900px) {
+  .dores {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: var(--espaco-5);
+    align-items: start;
+  }
+
+  /* O título acompanha a leitura da lista ao rolar */
+  .dores__intro {
+    position: sticky;
+    top: var(--espaco-4);
+  }
+
+  .dores__intro .secao__intro {
+    margin-bottom: 0;
+  }
+}
+
+.lista-dores {
+  display: grid;
+  gap: var(--espaco-3);
+}
+
+.lista-dores li {
+  position: relative;
+  padding-left: 1.75rem;
+}
+
+.lista-dores li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: var(--cor-vinho);
+}
+
+/* ---------- O curso + método ---------- */
+.secao--curso p + p {
+  margin-top: var(--espaco-2);
+}
+
+.metodo__titulo {
+  font-size: var(--titulo-3);
+  margin-top: var(--espaco-5);
+  margin-bottom: var(--espaco-3);
+}
+
+/* Lista ordenada: a sequência é real (entender → avaliar → tratar) */
+.metodo {
+  display: grid;
+  gap: var(--espaco-3);
+  counter-reset: passo;
+}
+
+.metodo__passo {
+  counter-increment: passo;
+  position: relative;
+  padding: var(--espaco-3);
+  padding-top: calc(var(--espaco-3) + 2.75rem);
+  background: var(--cor-branco);
+  border-radius: var(--raio-medio);
+}
+
+.metodo__passo::before {
+  content: counter(passo);
+  position: absolute;
+  top: var(--espaco-3);
+  left: var(--espaco-3);
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--cor-vinho);
+  color: var(--cor-branco);
+  font-family: var(--fonte-titulo);
+}
+
+.metodo__passo h4 {
+  font-size: var(--titulo-3);
+  margin-bottom: var(--espaco-1);
+}
+
+.metodo__passo p {
+  color: var(--cor-texto-suave);
+}
+
+@media (min-width: 768px) {
+  .metodo {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ---------- Benefícios ---------- */
+.secao--beneficios {
+  background: var(--cor-branco);
+}
+
+.lista-beneficios {
+  display: grid;
+  gap: var(--espaco-3);
+}
+
+.lista-beneficios li {
+  position: relative;
+  padding-left: 2.25rem;
+}
+
+/* Marca de "check" desenhada com bordas (sem imagem extra) */
+.lista-beneficios li::before {
+  content: "";
+  position: absolute;
+  left: 0.25rem;
+  top: 0.3em;
+  width: 0.5rem;
+  height: 0.9rem;
+  border: solid var(--cor-vinho);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+/* ---------- Acordeão (conteúdo e FAQ) ---------- */
+.acordeao {
+  border-top: 1px solid var(--cor-linha);
+}
+
+.acordeao__item {
+  border-bottom: 1px solid var(--cor-linha);
+}
+
+.acordeao__item summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--espaco-2);
+  padding-block: 1.125rem;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;  /* remove o triângulo padrão */
+}
+
+.acordeao__item summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Ícone +/−: duas barrinhas; a vertical "deita" ao abrir e vira um − */
+.acordeao__item summary::after {
+  content: "";
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  background:
+    linear-gradient(var(--cor-vinho), var(--cor-vinho)) center / 100% 2px no-repeat,
+    linear-gradient(var(--cor-vinho), var(--cor-vinho)) center / 2px 100% no-repeat;
+  transition: transform 0.35s ease;
+}
+
+.acordeao__item[open] summary::after {
+  transform: rotate(90deg);
+  background:
+    linear-gradient(var(--cor-vinho), var(--cor-vinho)) center / 2px 100% no-repeat;
+}
+
+/* Animação de abrir/fechar (js/acordeao.js) */
+.acordeao__item.is-animando {
+  overflow: hidden;
+}
+
+.acordeao__item summary:hover {
+  color: var(--cor-vinho);
+}
+
+.acordeao__item p {
+  padding-bottom: 1.25rem;
+  color: var(--cor-texto-suave);
+}
+
+/* ---------- Para quem é ---------- */
+.secao--para-quem {
+  background: var(--cor-branco);
+}
+
+.para-quem__grid {
+  display: grid;
+  gap: var(--espaco-3);
+}
+
+.para-quem__coluna {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* conteúdo no meio quando o card é mais alto que o texto */
+  padding: var(--espaco-4);
+  border-radius: var(--raio-medio);
+}
+
+.para-quem__coluna h3 {
+  font-size: var(--titulo-3);
+  margin-bottom: var(--espaco-2);
+}
+
+.para-quem__coluna ul {
+  display: grid;
+  gap: var(--espaco-2);
+  padding-left: 1.25rem;
+}
+
+.para-quem__coluna--sim {
+  background: var(--cor-argila);
+}
+
+.para-quem__coluna--nao {
+  border: 1px solid var(--cor-linha);
+  color: var(--cor-texto-suave);
+}
+
+@media (min-width: 768px) {
+  .para-quem__grid {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+
+/* ---------- Instrutora ---------- */
+.instrutora__grid {
+  display: grid;
+  gap: var(--espaco-4);
+  align-items: center;
+}
+
+.instrutora__foto img {
+  width: 100%;
+  max-width: 360px;
+  margin-inline: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--raio-medio);
+  background: var(--cor-argila);
+}
+
+.instrutora__texto p + p {
+  margin-top: var(--espaco-2);
+}
+
+.instrutora__registro {
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-suave);
+}
+
+@media (min-width: 900px) {
+  .instrutora__foto img {
+    max-width: 440px;
+  }
+
+  .instrutora__grid {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: var(--espaco-5);
+  }
+}
+
+/* ---------- Depoimentos ---------- */
+.secao--depoimentos {
+  background: var(--cor-branco);
+}
+
+.faixa-numeros {
+  background: var(--cor-argila);
+  padding-block: var(--espaco-5);
+}
+
+.numeros {
+  display: grid;
+  gap: var(--espaco-4);
+  text-align: center;
+}
+
+.numeros li {
+  color: var(--cor-berinjela);
+  max-width: 24ch;
+  margin-inline: auto;
+}
+
+.numeros strong {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-weight: 400;
+  font-size: var(--titulo-2);
+  line-height: 1.1;
+  color: var(--cor-vinho);
+  margin-bottom: 0.25rem;
+}
+
+/* Divisor curto e centralizado entre os itens no celular; vertical no desktop */
+.numeros li + li::before {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 2px;
+  margin: 0 auto var(--espaco-4);
+  background: rgba(122, 40, 72, 0.35);
+}
+
+@media (min-width: 768px) {
+  .numeros {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .numeros li + li::before {
+    display: none;
+  }
+
+  .numeros li + li {
+    border-left: 1px solid rgba(122, 40, 72, 0.25);
+  }
+
+  .numeros li {
+    max-width: none;
+    padding-inline: var(--espaco-3);
+  }
+}
+
+/* Depoimentos: um em destaque (palco) + lista lateral com barra de tempo.
+   Sem JS (sem .depoimentos--rotativo), os cinco aparecem em lista. */
+
+.depoimentos__palco {
+  display: grid;
+  gap: var(--espaco-5);
+}
+
+.depoimento blockquote p {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(1.375rem, 1.1rem + 1vw, 1.875rem);
+  line-height: 1.35;
+}
+
+/* Aspas decorativas em ocre */
+.depoimento blockquote::before {
+  content: "“";
+  display: block;
+  height: 2.75rem;
+  font-family: var(--fonte-titulo);
+  font-size: 5.5rem;
+  line-height: 0.85;
+  color: var(--cor-ocre);
+}
+
+.depoimento__pessoa {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: var(--espaco-3);
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-suave);
+}
+
+.depoimento__pessoa strong {
+  color: var(--cor-berinjela);
+}
+
+.depoimento__iniciais {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: var(--cor-vinho);
+  color: var(--cor-branco);
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+/* A lateral só existe com JS */
+.depoimentos__lateral {
+  display: none;
+}
+
+/* ---------- Modo rotativo (com JS) ---------- */
+.depoimentos--rotativo {
+  display: grid;
+  gap: var(--espaco-4);
+}
+
+/* Todos os depoimentos ocupam a mesma célula: a altura é a do maior,
+   então a página não "pula" quando o texto troca */
+.depoimentos--rotativo .depoimentos__palco {
+  grid-template-areas: "palco";
+  align-items: center;
+}
+
+.depoimentos--rotativo .depoimento {
+  grid-area: palco;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s 0.7s;
+}
+
+.depoimentos--rotativo .depoimento.is-ativo {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.7s ease 0.15s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s, visibility 0s;
+}
+
+.depoimentos--rotativo .depoimentos__lateral {
+  display: block;
+}
+
+/* Celular: a lista vira uma fileira de barrinhas de progresso */
+.depoimentos__lista {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.depoimentos__item {
+  position: relative;
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--cor-linha);
+  overflow: hidden;
+}
+
+.depoimentos__item p {
+  display: none;
+}
+
+/* Barra de tempo: enche enquanto o depoimento está ativo.
+   Quando termina de encher, o JS passa para o próximo. */
+.depoimentos__progresso {
+  position: absolute;
+  inset: 0;
+  background: var(--cor-vinho);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+.depoimentos__item.is-ativo .depoimentos__progresso {
+  animation: depoimento-progresso var(--tempo-depoimento, 7s) linear forwards;
+}
+
+/* Pausado: pelo botão ou com o foco do teclado dentro do bloco */
+.depoimentos.is-pausado .depoimentos__progresso,
+.depoimentos:has(:focus-visible) .depoimentos__progresso {
+  animation-play-state: paused;
+}
+
+/* Pausa com o mouse em cima só em aparelhos com mouse de verdade.
+   No celular, o toque deixa o :hover "grudado" e a troca nunca voltaria. */
+@media (hover: hover) and (pointer: fine) {
+  .depoimentos:hover .depoimentos__progresso {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes depoimento-progresso {
+  to { transform: scaleX(1); }
+}
+
+.depoimentos__pausar {
+  margin-top: var(--espaco-2);
+  padding: 0.375rem 0.875rem;
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-pilula);
+  background: transparent;
+  font-size: 0.8125rem;
+  color: var(--cor-texto-suave);
+}
+
+.depoimentos__pausar:hover {
+  border-color: var(--cor-vinho);
+  color: var(--cor-vinho);
+}
+
+/* Desktop: palco à esquerda, lista com nomes à direita */
+@media (min-width: 1024px) {
+  .depoimentos--rotativo {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: var(--espaco-5);
+    align-items: center;
+  }
+
+  .depoimentos__lista {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .depoimentos__item {
+    flex: none;
+    height: auto;
+    padding: 1rem 1.25rem 1.25rem;
+    border-radius: 14px;
+    background: transparent;
+    transition: background-color 0.4s ease;
+  }
+
+  .depoimentos__item p {
+    display: block;
+    font-size: var(--texto-pequeno);
+    color: var(--cor-texto-suave);
+  }
+
+  .depoimentos__item strong {
+    color: var(--cor-berinjela);
+  }
+
+  .depoimentos__trecho {
+    margin-top: 0.25rem;
+  }
+
+  .depoimentos__item.is-ativo {
+    background: var(--cor-nevoa);
+  }
+
+  /* A barra de tempo fica fininha, na base do item ativo */
+  .depoimentos__progresso {
+    inset: auto 1.25rem 0.625rem;
+    height: 2px;
+    border-radius: 1px;
+  }
+
+  .depoimentos__item:not(.is-ativo) .depoimentos__progresso {
+    display: none;
+  }
+}
+
+/* Reduzir movimento: troca só esmaecendo, sem deslocamento */
+@media (prefers-reduced-motion: reduce) {
+  .depoimentos--rotativo .depoimento {
+    transform: none;
+  }
+
+  .depoimentos--rotativo .depoimento,
+  .depoimentos--rotativo .depoimento.is-ativo {
+    transition-duration: 0.5s !important;
+  }
+
+  .depoimentos__item.is-ativo .depoimentos__progresso {
+    animation-duration: var(--tempo-depoimento, 7s) !important;
+  }
+}
+
+/* ---------- Garantia ---------- */
+.secao--garantia {
+  background: var(--cor-branco);
+}
+
+.garantia {
+  display: grid;
+  gap: var(--espaco-4);
+  align-items: center;
+}
+
+.garantia__selo {
+  display: grid;
+  place-content: center;
+  width: 8.5rem;
+  height: 8.5rem;
+  border-radius: 50%;
+  border: 2px solid var(--cor-ocre);
+  box-shadow: inset 0 0 0 6px var(--cor-branco), inset 0 0 0 8px var(--cor-ocre);
+  text-align: center;
+  font-weight: 600;
+  color: var(--cor-vinho);
+  line-height: 1;
+  justify-self: center;
+}
+
+.garantia__selo span {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-weight: 400;
+  font-size: 3.25rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;  /* respiro entre o "7" e "dias" */
+}
+
+/* No celular, selo e texto centralizados */
+@media (max-width: 767px) {
+  .garantia {
+    text-align: center;
+    justify-items: center;
+  }
+}
+
+.garantia p + p {
+  margin-top: var(--espaco-2);
+}
+
+.garantia__assinatura {
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-grande);
+}
+
+.garantia__assinatura span {
+  display: block;
+  font-family: var(--fonte-texto);
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-suave);
+}
+
+@media (min-width: 768px) {
+  .garantia__selo {
+    justify-self: start;
+  }
+
+  .garantia {
+    grid-template-columns: auto 1fr;
+    gap: var(--espaco-5);
+  }
+}
+
+/* ---------- Objeções e FAQ ---------- */
+.secao--faq {
+  background: var(--cor-branco);
+}
+
+.objecoes dt {
+  font-family: var(--fonte-titulo);
+  font-size: var(--titulo-3);
+  line-height: 1.3;
+  margin-bottom: var(--espaco-1);
+}
+
+.objecoes dd {
+  margin: 0 0 var(--espaco-4);
+  color: var(--cor-texto-suave);
+}
+
+.objecoes dd:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- CTA final ---------- */
+.secao--cta-final {
+  background: var(--cor-berinjela);
+  color: #EDE4EF;
+}
+
+.secao--cta-final .secao__titulo {
+  color: var(--cor-branco);
+}
+
+.secao--cta-final p + p {
+  margin-top: var(--espaco-2);
+}
+
+.cta-final__destaque {
+  font-family: var(--fonte-titulo);
+  font-size: var(--titulo-3);
+  color: var(--cor-branco);
+  margin-bottom: var(--espaco-4);
+}
+
+.secao--cta-final .microcopy {
+  color: #C9BACD;
+}
+
+.ps {
+  margin-top: var(--espaco-5) !important;
+  padding-top: var(--espaco-4);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+
+/* ==================== 8. OFERTA, PREÇO E FORMULÁRIO ==================== */
+
+.secao--oferta {
+  background: var(--cor-nevoa);
+}
+
+.oferta__grid {
+  display: grid;
+  gap: var(--espaco-5);
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .oferta__grid {
+    grid-template-columns: 1fr 440px;
+  }
+}
+
+/* "Stack de valor": item à esquerda, valor à direita */
+.stack {
+  border-top: 1px solid var(--cor-linha);
+}
+
+.stack__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--espaco-2);
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--cor-linha);
+}
+
+.stack__nome em {
+  display: inline-block;
+  margin-right: 0.375rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--raio-pilula);
+  background: var(--cor-argila);
+  color: var(--cor-vinho);
+  font-size: 0.8125rem;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.stack__valor {
+  flex-shrink: 0;
+  color: var(--cor-texto-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Card de preço: a terceira e última "bacia" da página */
+.preco {
+  background: var(--cor-vinho);
+  color: var(--cor-branco);
+  border-radius: 28px 28px 50% 50% / 28px 28px 80px 80px;
+  padding: var(--espaco-4) var(--espaco-3) calc(var(--espaco-5) + 24px);
+  text-align: center;
+}
+
+.preco__ancora {
+  color: #F2DCE4;
+}
+
+.preco__label {
+  margin-top: var(--espaco-2);
+  font-weight: 600;
+}
+
+.preco__valor {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(2.75rem, 2rem + 3vw, 3.5rem);
+  line-height: 1.1;
+}
+
+.preco__parcelas {
+  color: #F2DCE4;
+}
+
+.preco__destaque {
+  margin: var(--espaco-3) 0;
+  padding: 0.75rem 1rem;
+  border-radius: var(--raio-pequeno);
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.9375rem;
+}
+
+.preco .btn--cta {
+  width: 100%;
+}
+
+.preco__link-lista {
+  display: inline-block;
+  margin-top: var(--espaco-2);
+  color: var(--cor-branco);
+  font-weight: 600;
+}
+
+.preco .microcopy {
+  color: #F2DCE4;
+}
+
+.preco__urgencia {
+  margin-top: var(--espaco-3);
+  font-size: var(--texto-pequeno);
+  color: #F2DCE4;
+}
+
+/* ---------- Formulário (dentro do card de preço) ---------- */
+.form-lista {
+  margin-top: var(--espaco-3);
+  text-align: left;
+}
+
+.campo {
+  display: grid;
+  gap: 0.375rem;
+  margin-bottom: var(--espaco-2);
+}
+
+.campo label {
+  font-size: var(--texto-pequeno);
+  font-weight: 600;
+}
+
+.campo input[type="text"],
+.campo input[type="email"],
+.campo input[type="tel"] {
+  width: 100%;
+  min-height: 52px;
+  padding: 0.75rem 1rem;
+  border: 2px solid transparent;
+  border-radius: var(--raio-pequeno);
+  background: var(--cor-branco);
+  color: var(--cor-berinjela);
+  font-size: 1rem;  /* 16px evita zoom automático no iPhone */
+}
+
+.campo input::placeholder {
+  color: #9B8CA0;
+}
+
+.campo input:focus-visible {
+  outline: none;
+  border-color: var(--cor-ocre);
+}
+
+/* Estado de erro (a classe é colocada pelo JS) */
+.campo--erro input {
+  border-color: #FFB4AB;
+}
+
+.campo__erro {
+  font-size: var(--texto-pequeno);
+  font-weight: 600;
+  color: #FFD9D4;  /* legível sobre o vinho */
+}
+
+.campo__erro:empty {
+  display: none;
+}
+
+.campo--checkbox {
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  column-gap: 0.75rem;
+}
+
+.campo--checkbox input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.15rem;
+  accent-color: var(--cor-oliva);
+}
+
+.campo--checkbox label {
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.campo--checkbox label a {
+  color: var(--cor-branco);
+}
+
+.campo--checkbox .campo__erro {
+  grid-column: 1 / -1;
+}
+
+/* Honeypot: fora da tela (não usa display:none de propósito) */
+.campo-oculto {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.form-lista .btn {
+  margin-top: var(--espaco-1);
+}
+
+.form-lista__status {
+  margin-top: var(--espaco-2);
+  font-weight: 600;
+  text-align: center;
+}
+
+.form-lista__status:empty {
+  display: none;
+}
+
+
+/* ==================== 9. RODAPÉ ==================== */
+
+.rodape {
+  background: var(--cor-berinjela);
+  color: #C9BACD;
+  font-size: var(--texto-pequeno);
+  padding-block: var(--espaco-4) calc(var(--espaco-5) + 80px); /* espaço para a barra fixa */
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.rodape__inner {
+  display: grid;
+  gap: var(--espaco-1);
+}
+
+.rodape__marca {
+  font-family: var(--fonte-titulo);
+  font-size: 1.0625rem;
+  color: var(--cor-branco);
+}
+
+.rodape a {
+  color: var(--cor-branco);
+}
+
+.rodape__legal {
+  font-size: 0.8125rem;
+  color: #A897AD;
+}
+
+@media (min-width: 768px) {
+  .rodape {
+    padding-bottom: var(--espaco-4);
+  }
+}
+
+
+/* ==================== 10. ELEMENTOS FLUTUANTES ==================== */
+
+/* Barra fixa de CTA: só no celular, aparece depois do hero (via JS) */
+.barra-cta {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 50;
+  padding: 0.75rem var(--margem-lateral) calc(0.75rem + env(safe-area-inset-bottom));
+  background: rgba(243, 241, 245, 0.96);
+  box-shadow: 0 -1px 0 var(--cor-linha);
+  backdrop-filter: blur(8px);
+}
+
+@media (min-width: 768px) {
+  .barra-cta {
+    display: none !important;
+  }
+}
+
+/* Botão de WhatsApp */
+.whatsapp {
+  position: fixed;
+  right: var(--margem-lateral);
+  bottom: calc(var(--margem-lateral) + env(safe-area-inset-bottom));
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--cor-oliva);  /* também é uma ação, então usa a cor de ação */
+  color: var(--cor-branco);
+  box-shadow: 0 6px 20px rgba(42, 21, 48, 0.25);
+  transition: background-color 0.2s ease, bottom 0.2s ease;
+}
+
+.whatsapp:hover {
+  background: var(--cor-oliva-escuro);
+}
+
+/* Quando a barra de CTA está visível, o WhatsApp sobe para não ficar por baixo */
+.barra-cta:not([hidden]) ~ .whatsapp {
+  bottom: calc(88px + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 768px) {
+  .barra-cta:not([hidden]) ~ .whatsapp {
+    bottom: var(--margem-lateral);
+  }
+}
+
+/* Seletor de fase (modo portfólio) */
+.seletor-fase {
+  position: fixed;
+  left: var(--margem-lateral);
+  bottom: var(--margem-lateral);
+  z-index: 45;
+  padding: 0.75rem;
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-medio);
+  box-shadow: 0 6px 20px rgba(42, 21, 48, 0.12);
+  font-size: 0.8125rem;
+}
+
+.seletor-fase__titulo {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.seletor-fase__opcoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.seletor-fase__opcoes button {
+  white-space: nowrap;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-pilula);
+  background: var(--cor-nevoa);
+  font-size: 0.8125rem;
+}
+
+.seletor-fase__opcoes button[aria-pressed="true"] {
+  background: var(--cor-berinjela);
+  border-color: var(--cor-berinjela);
+  color: var(--cor-branco);
+}
+
+/* No celular o seletor fica no topo, para não disputar espaço com a barra de CTA */
+@media (max-width: 767px) {
+  .seletor-fase {
+    position: static;
+    border-radius: 0;
+    border-width: 0 0 1px;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .seletor-fase__titulo {
+    margin: 0;
+  }
+}
+
+
+/* Aviso flutuante (modo demonstração) */
+.aviso-toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--espaco-4) + env(safe-area-inset-bottom));
+  z-index: 60;
+  width: min(92vw, 440px);
+  padding: 1rem 1.25rem;
+  border-radius: var(--raio-medio);
+  background: var(--cor-berinjela);
+  color: var(--cor-branco);
+  font-size: 0.9375rem;
+  box-shadow: 0 10px 30px rgba(42, 21, 48, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 12px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s;
+}
+
+.aviso-toast.is-visivel {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* ==================== 11. PÁGINAS INTERNAS ==================== */
+
+.obrigado,
+.texto-legal {
+  padding-block: var(--espaco-5) var(--espaco-secao);
+}
+
+.obrigado .marca {
+  display: block;
+  margin-bottom: var(--espaco-4);
+}
+
+.obrigado__titulo {
+  font-size: var(--titulo-1);
+  margin-bottom: var(--espaco-3);
+}
+
+.obrigado__texto {
+  font-size: var(--texto-grande);
+  margin-bottom: var(--espaco-4);
+}
+
+.obrigado__demo {
+  margin-block: var(--espaco-5);
+  padding: var(--espaco-4) var(--espaco-3);
+  background: var(--cor-branco);
+  border-radius: var(--raio-medio);
+}
+
+.obrigado__demo h2 {
+  font-size: var(--titulo-3);
+  margin-bottom: var(--espaco-1);
+}
+
+.obrigado__demo p {
+  color: var(--cor-texto-suave);
+  margin-bottom: var(--espaco-3);
+}
+
+.link-voltar {
+  display: inline-block;
+  margin-top: var(--espaco-4);
+  font-weight: 600;
+}
+
+.texto-legal h1 {
+  font-size: var(--titulo-1);
+  margin-top: var(--espaco-3);
+}
+
+.texto-legal__data {
+  color: var(--cor-texto-suave);
+  margin-bottom: var(--espaco-4);
+}
+
+.texto-legal h2 {
+  font-size: var(--titulo-3);
+  margin: var(--espaco-4) 0 var(--espaco-1);
+}
+
+.texto-legal p + p {
+  margin-top: var(--espaco-2);
+}
+
+.texto-legal ul {
+  display: grid;
+  gap: var(--espaco-1);
+  padding-left: 1.25rem;
+  margin-block: var(--espaco-1);
+}
+
+
+/* ==================== 12. ANIMAÇÕES ====================
+   Conteúdo das seções aparecendo ao rolar (js/revelar.js).
+   Só vale com JS: a classe .revelar é colocada pelo script. */
+
+.revelar {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.revelar.is-visivel {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Reduzir movimento: só esmaece, sem subir */
+@media (prefers-reduced-motion: reduce) {
+  .revelar {
+    transform: none;
+  }
+
+  .revelar.is-visivel {
+    transition: opacity 0.6s ease !important;
+  }
+}
+
+/* ---------- Entrada do hero ----------
+   Um único momento de movimento: o hero aparece em sequência ao abrir a página.
+   O resto da página não anima ao rolar, de propósito. */
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes curva {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.hero__texto > * {
+  animation: surgir 0.6s ease-out both;
+}
+
+.hero__texto > :nth-child(2) { animation-delay: 0.08s; }
+.hero__texto > :nth-child(3) { animation-delay: 0.16s; }
+.hero__texto > :nth-child(n + 4) { animation-delay: 0.24s; }
+
+.hero__foto {
+  animation: surgir 0.8s 0.2s ease-out both;
+}
+
+/* O traço ocre "desenha" a bacia por último */
+.hero__foto::after {
+  animation: curva 0.9s 0.7s ease-out both;
+}
