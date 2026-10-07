@@ -74,7 +74,7 @@ window.CONFIG = Object.freeze({
     endpoint: "https://script.google.com/macros/s/AKfycbwSGX96PsmoNGEYiPPW_h_FIa_21rZoD7SaSlxZQ-Tc4jxhaDCqHsCPN_2VSzUGO-ze/exec",
     // Link público da aba "Demonstração" (dados mascarados),
     // exibido na página de obrigado quando modoDemo = true.
-    linkDemonstracao: ""
+    linkDemonstracao: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRjaAHnuw-LQLPHGslDBErxVSVsSUkW_cgPmS4M-3zi5V9w_R3NCKTFukHxnzrpBoCXWEqAhF8qRXKE/pubhtml?gid=365628732&single=true"
   },
 
   /* ----------------------------------------------------------

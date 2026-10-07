@@ -76,7 +76,7 @@ Abra a landing page, faça uma inscrição de teste e confira: em alguns segundo
 4. Clique em **Publicar** e copie o link.
 5. Cole no `js/config.js`, em `linkDemonstracao`.
 
-Agora, no modo portfólio, a página de obrigado mostra o botão **"Abrir planilha de demonstração"**. A versão publicada pode levar alguns minutos para mostrar uma inscrição nova.
+Agora, no modo portfólio, aparece o link **"Ver a planilha de demonstração"** logo abaixo do formulário e o botão **"Abrir planilha de demonstração"** na página de obrigado. A versão publicada pode levar alguns minutos para mostrar uma inscrição nova.
 
 ---
 

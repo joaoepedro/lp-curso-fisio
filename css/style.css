@@ -1432,6 +1432,36 @@ html[data-fase="encerrado"] [data-mostrar]:not([data-mostrar~="encerrado"]) {
   display: none;
 }
 
+/* Texto só para leitores de tela */
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Link da planilha de demonstração (modo portfólio) */
+.form-lista__demo {
+  margin-top: var(--espaco-3);
+  padding-top: var(--espaco-2);
+  border-top: 1px solid rgb(255 255 255 / 0.25);
+  font-size: var(--texto-pequeno);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.form-lista__demo a {
+  display: inline-block;
+  margin-top: 0.25rem;
+  color: var(--cor-branco);
+  font-weight: 600;
+}
+
 
 /* ==================== 9. RODAPÉ ==================== */
 

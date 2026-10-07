@@ -49,4 +49,11 @@
       setTimeout(function () { nome.focus({ preventScroll: true }); }, 700);
     });
   });
+
+  /* ---------- Modo portfólio: link da planilha de demonstração ---------- */
+  var demo = document.querySelector("[data-demo-planilha]");
+  if (demo && CONFIG.modoDemo && CONFIG.planilha.linkDemonstracao) {
+    demo.querySelector("[data-link-planilha]").href = CONFIG.planilha.linkDemonstracao;
+    demo.hidden = false;
+  }
 })();
