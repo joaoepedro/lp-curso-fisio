@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lp-curso-fisio.netlify.app/sitemap.xml
+Sitemap: https://saudedamulher.vercel.app/sitemap.xml
